@@ -474,7 +474,8 @@ def convert_file():
         return jsonify({
             'success': True, 
             'message': '完成',
-            'download_url': f'/download/{os.path.basename(output_path)}'
+            'download_url': f'/download/{os.path.basename(output_path)}',
+            'output_filename': os.path.basename(output_path)
         })
     except Exception as e:
         cleanup_file(input_path if 'input_path' in locals() else None)
@@ -727,7 +728,8 @@ def calculate_roughness():
             'success': True, 
             'message': '粗糙度计算完成',
             'download_url': f'/download/{os.path.basename(output_path)}',
-            'roughness_file': os.path.basename(output_path)  # 保存粗糙度文件名
+            'roughness_file': os.path.basename(output_path),
+            'output_filename': os.path.basename(output_path)
         }
         
         # 如果获取到了边界信息，添加到响应中
@@ -1001,7 +1003,8 @@ def get_ascii_values():
             return jsonify({
                 'success': True,
                 'message': f'成功获取{len(coordinates)}个坐标点的ASCII行列号',
-                'download_url': f'/download/{output_filename}'
+                'download_url': f'/download/{output_filename}',
+                'output_filename': output_filename
             })
         else:
             return jsonify({'success': False, 'message': '获取ASCII行列号失败，请检查控制台日志'})

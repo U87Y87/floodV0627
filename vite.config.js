@@ -173,6 +173,11 @@ export default defineConfig({
   // Allow requests forwarded by ngrok while keeping Vite's host check enabled.
   allowedHosts: ['.ngrok-free.dev'],
   proxy: {
+    '/api/upload-flood-files': {
+      target: 'http://127.0.0.1:18080',
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api\/upload-flood-files/, '/upload-all'),
+    },
     '/api/download-txt-zip': {
       target: 'http://127.0.0.1:18080',
       changeOrigin: true,

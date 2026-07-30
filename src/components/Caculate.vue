@@ -1,41 +1,40 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-const demPath = ref('')
-const roughnessPath = ref('')
-const breachPath = ref('')
+const props = defineProps({
+  initialFiles: {
+    type: Object,
+    default: () => ({ dem: null, roughness: null, breach: null }),
+  },
+})
+
+const emit = defineEmits(['files-change'])
+
+const demFile = ref(null)
+const roughnessFile = ref(null)
+const breachFile = ref(null)
+const demInput = ref(null)
+const roughnessInput = ref(null)
+const breachInput = ref(null)
 const utmZone = ref('')
 const simulationStatus = ref('等待选择模拟输入文件')
 const isSimulating = ref(false)
 
-async function chooseFloodFile(kind) {
-  simulationStatus.value = '正在打开文件选择窗口...'
-  try {
-    const response = await fetch('/api/select-file', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kind }),
-    })
-    const result = await response.json()
-    if (!response.ok) throw new Error(result.error ?? '无法打开文件选择窗口。')
-    if (!result.path) {
-      simulationStatus.value = '已取消文件选择。'
-      return
-    }
-
-    const expectedExtension = kind === 'breach' ? '.dat' : '.asc'
-    if (!result.path.toLowerCase().endsWith(expectedExtension)) {
-      const fileLabel = kind === 'breach' ? '溃口' : kind === 'dem' ? 'DEM' : '糙率'
-      throw new Error(`${fileLabel}文件必须是 ${expectedExtension}。`)
-    }
-
-    if (kind === 'dem') demPath.value = result.path
-    else if (kind === 'roughness') roughnessPath.value = result.path
-    else breachPath.value = result.path
-    simulationStatus.value = '文件已选择，等待开始模拟。'
-  } catch (error) {
-    simulationStatus.value = `选择失败：${error.message}`
+function currentFiles() {
+  return {
+    dem: demFile.value,
+    roughness: roughnessFile.value,
+    breach: breachFile.value,
   }
+}
+
+function handleFloodFile(event, kind) {
+  const file = event.target.files?.[0] ?? null
+  if (kind === 'dem') demFile.value = file
+  else if (kind === 'roughness') roughnessFile.value = file
+  else breachFile.value = file
+  emit('files-change', currentFiles())
+  simulationStatus.value = file ? '文件已选择，等待开始模拟。' : '等待选择模拟输入文件'
 }
 
 async function downloadZip(url, fallbackName) {
@@ -54,7 +53,7 @@ async function downloadZip(url, fallbackName) {
 }
 
 async function runFloodSimulation() {
-  if (!demPath.value || !roughnessPath.value || !breachPath.value) {
+  if (!demFile.value || !roughnessFile.value || !breachFile.value) {
     simulationStatus.value = '请先选择 DEM、糙率与溃口文件。'
     return
   }
@@ -68,15 +67,13 @@ async function runFloodSimulation() {
   isSimulating.value = true
   simulationStatus.value = '洪水模拟计算中，请稍候...'
   try {
-    const response = await fetch('/api/flood-simulate', {
+    const formData = new FormData()
+    formData.append('dem', demFile.value, 'dem.asc')
+    formData.append('cao', roughnessFile.value, 'cao.asc')
+    formData.append('river', breachFile.value, 'InputRiver.dat')
+    const response = await fetch(`/api/upload-flood-files?utmZone=${encodeURIComponent(normalizedUtmZone)}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        demPath: demPath.value,
-        roughnessPath: roughnessPath.value,
-        breachPath: breachPath.value,
-        utmZone: normalizedUtmZone,
-      }),
+      body: formData,
     })
     const result = await response.json()
     if (!response.ok) throw new Error(result.error ?? '模拟失败。')
@@ -99,6 +96,19 @@ async function runFloodSimulation() {
     isSimulating.value = false
   }
 }
+
+watch(
+  () => props.initialFiles,
+  (files) => {
+    if (files.dem !== undefined) demFile.value = files.dem
+    if (files.roughness !== undefined) roughnessFile.value = files.roughness
+    if (files.breach !== undefined) breachFile.value = files.breach
+    if (demFile.value && roughnessFile.value && breachFile.value) {
+      simulationStatus.value = '三个模拟输入文件已自动填充，等待设置投影带号。'
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -106,18 +116,39 @@ async function runFloodSimulation() {
     <h1>洪水计算</h1>
     <label>DEM 文件（ASC）</label>
     <div class="folder-choice">
-      <button @click="chooseFloodFile('dem')">选择文件</button>
-      <span>{{ demPath || '尚未选择' }}</span>
+      <button type="button" @click="demInput?.click()">{{ demFile ? '重新选择' : '选择文件' }}</button>
+      <span>{{ demFile?.name || '尚未选择' }}</span>
+      <input
+        ref="demInput"
+        class="simulation-file-input"
+        type="file"
+        accept=".asc"
+        @change="handleFloodFile($event, 'dem')"
+      >
     </div>
     <label>糙率文件（ASC）</label>
     <div class="folder-choice">
-      <button @click="chooseFloodFile('roughness')">选择文件</button>
-      <span>{{ roughnessPath || '尚未选择' }}</span>
+      <button type="button" @click="roughnessInput?.click()">{{ roughnessFile ? '重新选择' : '选择文件' }}</button>
+      <span>{{ roughnessFile?.name || '尚未选择' }}</span>
+      <input
+        ref="roughnessInput"
+        class="simulation-file-input"
+        type="file"
+        accept=".asc"
+        @change="handleFloodFile($event, 'roughness')"
+      >
     </div>
     <label>溃口文件（DAT）</label>
     <div class="folder-choice">
-      <button @click="chooseFloodFile('breach')">选择文件</button>
-      <span>{{ breachPath || '尚未选择' }}</span>
+      <button type="button" @click="breachInput?.click()">{{ breachFile ? '重新选择' : '选择文件' }}</button>
+      <span>{{ breachFile?.name || '尚未选择' }}</span>
+      <input
+        ref="breachInput"
+        class="simulation-file-input"
+        type="file"
+        accept=".dat"
+        @change="handleFloodFile($event, 'breach')"
+      >
     </div>
     <label for="utm-zone">投影带带号（1-60）</label>
     <input

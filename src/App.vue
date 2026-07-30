@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import AgentAssistant from './components/AgentAssistant.vue'
 import Caculate from './components/Caculate.vue'
 import DataProcessingPanel from './components/DataProcessingPanel.vue'
 import MeshConvert from './components/meshConvert.vue'
@@ -9,6 +10,8 @@ import TileLoaderDialog from './components/TileLoaderDialog.vue'
 
 const renderComponent = ref(null)
 const cesiumViewer = shallowRef(null)
+const pendingAgentTifFile = shallowRef(null)
+const simulationFiles = shallowRef({ dem: null, roughness: null, breach: null })
 const activePanel = ref('data')
 const searchText = ref('')
 const isLoggedIn = ref(false)
@@ -24,6 +27,7 @@ const menuItems = [
   { id: 'mesh', label: '格网转换', short: '网' },
   { id: 'render', label: '可视化', short: '视' },
   { id: 'sample', label: '案例展示', short: '案' },
+  { id: 'agent', label: '智能体', short: '智' },
 ]
 
 const formattedTime = computed(() => new Intl.DateTimeFormat('zh-CN', {
@@ -70,6 +74,19 @@ function toggleTerrain() {
 
 function handleLocalTerrainLoaded() {
   renderComponent.value?.setTerrainEnabled(true)
+}
+
+function handleAgentTifFile(file) {
+  pendingAgentTifFile.value = file
+  activePanel.value = 'data'
+}
+
+function handlePipelineFile({ kind, file }) {
+  const nextFiles = { ...simulationFiles.value, [kind]: file }
+  simulationFiles.value = nextFiles
+  if (nextFiles.dem && nextFiles.roughness && nextFiles.breach) {
+    activePanel.value = 'caculate'
+  }
 }
 
 function submitSearch() {
@@ -178,12 +195,19 @@ onBeforeUnmount(() => {
 
     <Transition name="panel-slide">
       <DataProcessingPanel
-        v-if="activePanel === 'data'"
+        v-show="activePanel === 'data'"
         :viewer="cesiumViewer"
+        :initial-convert-file="pendingAgentTifFile"
+        @initial-file-consumed="pendingAgentTifFile = null"
+        @pipeline-file="handlePipelineFile"
       />
     </Transition>
     <Transition name="panel-slide">
-      <Caculate v-if="activePanel === 'caculate'" />
+      <Caculate
+        v-show="activePanel === 'caculate'"
+        :initial-files="simulationFiles"
+        @files-change="simulationFiles = $event"
+      />
     </Transition>
     <Transition name="panel-slide">
       <MeshConvert v-if="activePanel === 'mesh'" />
@@ -193,6 +217,13 @@ onBeforeUnmount(() => {
         v-if="activePanel === 'sample'"
         :render-component="renderComponent"
         :metrics="caseMetrics"
+      />
+    </Transition>
+    <Transition name="panel-slide">
+      <AgentAssistant
+        v-if="activePanel === 'agent'"
+        @navigate="activePanel = $event"
+        @tif-file="handleAgentTifFile"
       />
     </Transition>
     <TileLoaderDialog

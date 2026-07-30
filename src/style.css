@@ -832,6 +832,15 @@ button {
   white-space: nowrap;
 }
 
+.simulation-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .utm-zone-input {
   width: 100%;
   padding: 10px;
@@ -1010,7 +1019,25 @@ button {
   padding: 8px 0 0 8px;
 }
 
+.data-existing-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 9px 8px 3px;
+  color: #607f94;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.data-existing-title i {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, rgba(85, 215, 238, 0.22), transparent);
+}
+
 .data-processing-panel .data-tool-nav {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -1021,6 +1048,15 @@ button {
   background: transparent;
   text-align: left;
   font-size: 12px;
+}
+
+.data-processing-panel .data-tool-nav .stored-tool-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #38d996;
+  box-shadow: 0 0 8px rgba(56, 217, 150, 0.72);
 }
 
 .data-processing-panel .data-tool-nav span {
@@ -1184,6 +1220,279 @@ button {
   color: #dff9fd;
   background: rgba(33, 185, 216, 0.12);
   cursor: pointer;
+}
+
+.upload-field .convert-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.upload-field .shared-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.data-processing-panel .shared-upload-field {
+  margin-top: 8px;
+}
+
+.shared-upload-field > span:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.shared-upload-field > span:first-child i {
+  padding: 3px 6px;
+  border-radius: 8px;
+  color: #55dba9;
+  background: rgba(56, 217, 150, 0.09);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.convert-file-picker {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.convert-file-picker strong {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid rgba(85, 215, 238, 0.3);
+  border-radius: 6px;
+  color: #dff9fd;
+  background: rgba(33, 185, 216, 0.12);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.convert-file-picker small {
+  min-width: 0;
+  overflow: hidden;
+  color: #8199ac;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agent-file-ready {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: -2px 0 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(56, 217, 150, 0.2);
+  border-radius: 8px;
+  color: #92cbb5;
+  background: rgba(56, 217, 150, 0.07);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.agent-file-ready span {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #071b16;
+  background: #38d996;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.shared-dependencies {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 13px;
+}
+
+.dependency-title {
+  display: block;
+  margin-bottom: 6px;
+  color: #718ea2;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.shared-dependencies > div {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid rgba(148, 181, 211, 0.12);
+  border-radius: 8px;
+  background: rgba(5, 16, 27, 0.46);
+}
+
+.shared-dependencies > div.ready {
+  border-color: rgba(56, 217, 150, 0.2);
+  background: rgba(56, 217, 150, 0.045);
+}
+
+.shared-dependencies > div > span {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid rgba(85, 215, 238, 0.22);
+  border-radius: 7px;
+  color: #55d7ee;
+  background: rgba(33, 185, 216, 0.07);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.shared-dependencies p {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.shared-dependencies strong {
+  color: #c5d8e3;
+  font-size: 10px;
+}
+
+.shared-dependencies small {
+  overflow: hidden;
+  color: #6f899c;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shared-dependencies i {
+  color: #8b9dab;
+  font-size: 8px;
+  font-style: normal;
+}
+
+.shared-dependencies .ready i {
+  color: #51d9a4;
+}
+
+.stored-file-card {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  padding: 13px;
+  border: 1px solid rgba(56, 217, 150, 0.22);
+  border-radius: 10px;
+  background: linear-gradient(110deg, rgba(56, 217, 150, 0.08), rgba(33, 185, 216, 0.035));
+}
+
+.stored-file-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(85, 215, 238, 0.32);
+  border-radius: 10px;
+  color: #55d7ee;
+  background: rgba(33, 185, 216, 0.1);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.stored-file-icon.asc {
+  color: #55e0ad;
+  border-color: rgba(56, 217, 150, 0.32);
+  background: rgba(56, 217, 150, 0.09);
+}
+
+.stored-file-icon.dat {
+  color: #f2c96d;
+  border-color: rgba(242, 201, 109, 0.32);
+  background: rgba(242, 201, 109, 0.08);
+}
+
+.stored-file-card > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stored-file-card strong {
+  overflow: hidden;
+  color: #e1f0f7;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stored-file-card small {
+  color: #7692a5;
+  font-size: 9px;
+}
+
+.stored-file-card > i {
+  color: #55dba9;
+  font-size: 9px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.stored-file-note {
+  margin: 11px 0 0;
+  padding: 9px 10px;
+  border-left: 2px solid rgba(85, 215, 238, 0.5);
+  color: #7894a6;
+  background: rgba(33, 185, 216, 0.045);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.stored-file-empty {
+  padding: 17px 13px;
+  border: 1px dashed rgba(148, 181, 211, 0.22);
+  border-radius: 10px;
+  background: rgba(5, 16, 27, 0.4);
+  text-align: center;
+}
+
+.stored-file-empty > span {
+  color: #b5cad7;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.stored-file-empty p {
+  margin: 6px 0 12px;
+  color: #698499;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.data-processing-panel .stored-file-empty button {
+  padding: 7px 10px;
+  color: #dff9fd;
+  background: rgba(33, 185, 216, 0.12);
+  font-size: 9px;
 }
 
 .data-processing-panel .data-primary-button {
