@@ -1,0 +1,42 @@
+joint analysis of multi-source and heterogeneous geospatial data. SOLAP and EO data
+cubes work together in a cloud computing environment. Cloud computing refers to
+the on-demand use of storage and computing resources that are located on net-
+worked computers. Existing cloud computing technologies such as Apache Spark have
+been used extensively for big data processing. Apache Spark is a high-performance
+cloud computing engine that was developed for data-intensive applications. It incor-
+porates a data model known as the Resilient Distributed Dataset (RDD), which is a
+data collection that is partitioned across a set of machines for distributed computing
+(Zaharia et al . 2010). The leveraging of cloud computing and this data model can sig-
+nificantly improve the processing capabilities of the cube infrastructure. (3) The infra-
+structure improves the load balance of parallel geoprocessing using AI. Although
+cloud computing empowers the infrastructure with parallel geoprocessing capabilities,
+geospatial data are heterogeneous and spatially distributed in an irregular manner,
+which often leads to a load imbalance owing to the various computational intensities
+of the different tiles. AI machine learning technology, which has shown potential for
+the evaluation of CI (Yue et al . 2020), can be incorporated into the distributed tile
+processing to improve the load balance.
+3. Materials and methods
+This section describes the approach for constructing the multi-source spatio-temporal
+data cube for large-scale geospatial analysis. The approach includes the formalization
+of cube dimensions to accommodate multi-source data ( Section 3.1 ), cube tile process-
+ing using cloud computing ( Section 3.2 ), and enhanced cube computation using AI
+(Section 3.3 ).
+A new geospatial data cube with the following characteristics is proposed. First,
+multi-source geospatial data, including raster and vector data, can be accommodated
+in the cube. Four dimensions, namely time, space, product, and band, are formalized.
+The multi-source data are spatially aligned and stacked in a time-series form. Thus, it
+is named as a multi-source spatio-temporal data cube. The cube is developed using
+the OLAP fact constellation schema, so that OLAP operations such as spatial merge,
+map algebra and time-series analysis can be performed on the cube ( Section 3.1 ).
+Second, cloud computing is used for processing the cube tiles. Distributed cube
+objects for cube tiles are proposed to facilitate the distributed computing ( Section
+3.2). Third, AI technologies are applied to enhance the load balance in the cube com-
+putation. The heterogeneity of the geospatial data can be captured from a data sci-
+ence perspective using AI machine learning, thereby optimizing the parallel
+computing performance ( Section 3.3 ).
+3.1. Cube dimension formalization
+The cube dimensions are important for the development of a cube data model.
+Geospatial data can be represented in multiple dimensions, such as the space, time,
+and thematic properties. The model specifies several basic dimensions to accommo-
+date the raster, vector, and tabular data, as illustrated in Figure 2 .
+1860 F. GAO ET AL.

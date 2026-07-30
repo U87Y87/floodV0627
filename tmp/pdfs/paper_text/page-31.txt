@@ -1,0 +1,55 @@
+Cesium, 2021. The Platform for 3D Geospatial [online]. Cesium GS, Inc. Available from: https://ces-
+ium.com [Accessed 22 July 2021].
+Chaudhuri, S., and Dayal, U., 1997. An overview of data warehousing and OLAP technology.
+ACM SIGMOD Record , 26 (1), 65 –74.
+COG, 2021. Cloud Optimized Geotiff [online]. Cloud Optimized GeoTIFF community. Available
+from: https://www.cogeo.org [Accessed 26 October 2021].
+Damiani, M.L., and Spaccapietra, S., 2008. Spatial data warehouse modelling. In: J. Wang, ed.
+Data warehousing and mining: concepts, methodologies, tools, and applications. Hershey: IGI
+Global, 659 –678.
+Dask, 2021. Scalable analytics in Python [online]. NumFOCUS community. Available from: https://
+dask.org [Accessed 22 July 2021].
+ESA, 2012. Grid processing on demand (G-POD) for earth observation applications [online].
+European Space Agency (ESA). Available from: https://gpod.eo.esa.int [Accessed 26 October
+2021].
+ESDC, 2021. Earth system data cube [online]. The Earth System Data Cube (ESDC) Team.
+Available from: https://cablab.readthedocs.io/en/latest [Accessed 22 July 2021].
+George, L., 2011. HBase: the definitive guide: random access to your planet-size data . California:
+O’Reilly Media Inc.
+Geotrellis, . 2021. A geographic data processing engine for high performance applications
+[online]. Azavea Inc. Available from: https://geotrellis.readthedocs.io/en/latest [Accessed 22
+July 2021].
+Giuliani, G., et al. , 2017. Building an earth observations data cube: lessons learned from the
+Swiss Data Cube (SDC) on generating analysis ready data (ARD). Big Earth Data. ,1( 1 –2),
+100–117.
+Gomes, V.C.F., et al. , 2021. Accessing and processing Brazilian earth observation data cubes with
+the open data cube platform. ISPRS Annals of the Photogrammetry, Remote Sensing and Spatial
+Information Sciences , V-4-2021, 153 –159.
+Gorelick, N., et al. , 2017. Google earth engine: planetary-scale geospatial analysis for everyone.
+Remote Sensing of Environment , 202, 18 –27.
+Gray, J., et al. , 1997. Data cube: a relational aggregation operator generalizing group-by, cross-
+tab, and sub-totals. Data Mining and Knowledge Discovery , 1 (1), 29 –53.
+Han, J., et al. , 1998. Selective materialization: An efficient method for spatial data cube construc-
+tion. In : Pacific-Asia conference on knowledge discovery and data mining, 15 –17 April 1998.
+Australia. Berlin: Springer, 144 –158.
+Jupyter, 2021. Project Jupyter [online]. Jupyter community. Available from: https://jupyter.org
+[Accessed 22 July 2021].
+Kasprzyk, J.P., and Devillet, G., 2021. A data cube metamodel for geographic analysis involving
+heterogeneous dimensions. ISPRS International Journal of Geo-Information , 10 (2), 87.
+Killough, B., et al. , 2020. Advancements in the open data cube and analysis ready data —past,
+present and future. In : 2020 IEEE international geoscience and remote sensing symposium
+(IGARSS),1 6 –26 July 2018. Waikoloa Village, New York: IEEE, 3373 –3375.
+Kimball, R., and Ross, M., 2011. The data warehouse toolkit: the complete guide to dimensional
+modeling. New York: John Wiley & Sons Inc.
+Koperski, K., et al. , 1998. Mining knowledge in geographical data. Communications of the ACM ,
+26 (1), 65 –74.
+Kopp, S., et al. , 2019. Achieving the full vision of earth observation data cubes. Data, 4 (3), 94.
+Kraska, T., et al. , 2018. The case for learned index structures. In: Proceedings of the 2018 inter-
+national conference on management of data, 10 –15 June 2018. Houston, New York: ACM
+Digital Library, 489 –504.
+Lewis, A., et al. , 2016. Rapid, high-resolution detection of environmental change over continental
+scales from satellite data –the earth observation data cube. International Journal of Digital
+Earth, 9 (1), 106 –111.
+Lewis, A., et al. , 2017. The Australian geoscience data cube —foundations and lessons learned.
+Remote Sensing of Environment , 202 (1), 276 –292.
+1882 F. GAO ET AL.

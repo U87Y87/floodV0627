@@ -1,0 +1,28 @@
+where the FeatureCollection class contains a set of geometries and their corresponding
+attributes. A FeatureRDD can be converted into a SpatialRDD by retaining only the geo-
+metric information. Subsequently, a PointRDD, PolylineRDD, and PolygonRDD can be
+created from a SpatialRDD because the geometry may be a point, polyline, or polygon.
+The CubeRDD design makes it easier to perform geoprocessing along different
+dimensions. For example, a RasterRDD can be grouped along the temporal dimension
+to enable distributed time-series analyses or along the band dimension to perform dis-
+tributed band algebra operations, such as the Normalized Difference Vegetation Index.
+A FeatureRDD can be grouped along the product dimension to support the distrib-
+uted spatial intersection between two products. RasterRDDs and FeatureRDDs can be
+joined together to locate raster and vector tiles that share common dimensions,
+thereby enabling distributed joint analysis for multi-source geospatial data.
+3.2.2. Cube querying and processing
+The cube querying and processing operations are depicted in Figure 5 . First, the cube
+receives and parses multi-dimensional query parameters, following which the tile IDs
+are retrieved from the dimension and fact tables. These tile IDs are partitioned and
+assigned to each computing unit to enable parallel data access. Cube processing
+includes batch processing, cloud computing, and multi-thread computing. The use of
+cloud computing and multi-thread computing forms hybrid parallelism, which refers
+to a blend of distributed and shared memory parallelism (LLNL 2021).
+Batch processing solves the issue whereby a large number of tiles cannot be loaded
+into memory simultaneously, and it is used to divide the tiles into several batches.
+Each batch can be loaded into memory as a whole. Thus, batch processing enables a
+large number of tiles to be processed with limited memory. Each batch is accessed as
+a distributed cube object (CubeRDD). Furthermore, a multi-thread pool is created to
+process each single large tile. The size of a tile may be very large, for example, a high-
+Figure 4. Distributed cube objects.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1865

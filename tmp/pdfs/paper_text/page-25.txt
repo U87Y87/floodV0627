@@ -1,0 +1,14 @@
+the time cost of the data query stage was nearly equal when using the two
+approaches. However, the AI approach exhibited a greater time saving compared to
+the original approach in the processing stage. The load balance performance of the
+two approaches on the three datasets is presented in Figure 16 , which indicates the
+time cost for each executor. The results demonstrate that the AI approach could
+achieve a better load balance performance than the original approach.
+5. Discussions
+Both EO and BI data cubes have been advocated in big data analytics, and it is
+important for the two to be harmonized to support OLAP operations. The significant
+Figure 14. Accuracy of different models from combinations of feature selection and machine learn-
+ing algorithms: (a) R2 and (b) MAE.
+Figure 15. Computing efficiency comparison between original and AI approaches.
+Figure 16. Load balance performance comparison between original and AI approaches.
+1876 F. GAO ET AL.

@@ -1,0 +1,46 @@
+maintaining the cube data accessibility in a private environment. Moreover, the cou-
+pling of the cubes and external data is flexible: external data vendors can deploy the
+cube system to provide cube access or data can be downloaded from external data
+vendors and ingested into local cubes. Although GeoCube is currently deployed in a
+private cloud environment using local computing clusters, it may be used in public
+cloud environments. The proposed distributed cube objects based on the Spark
+middleware can be deployed on any virtual machine in a public infrastructure-as-a-ser-
+vice (IaaS) environment. The use of AI methods to optimize the load balance in the
+computation may be effective in capturing the heterogeneous computational features
+of the geoprocessing. However, such method is more suitable for commonly used
+products with fine-tuned prediction models. If the training cost for the AI evaluation
+of the CI in specific analytical functions is excessive, straightforward tile dissemination
+based on tile numbers may be preferable in simple computations, such as map alge-
+bra operation, compared to complex ones, such as vector tile analysis.
+GeoCube demonstrates the applicability of the proposed methods on Landsat,
+Gaofen, Sentinel, and OSM. Other EO data sources are currently being tested and sup-
+ported, and future work will extend the system to provincial EO data centers. A per-
+formance comparison between GeoCube and the ODC has been presented, and
+GeoCube outperformed the ODC in terms of data processing efficiency. In the experi-
+ment, the ODC used the NetCDF format for data storage, which is known for its lim-
+ited capabilities in the cloud environment. Cloud Optimized GeoTIFF (COG) is an
+alternative imagery data format for the cloud environment (COG 2021), and ODC users
+are attempting to use this format to improve the performance. A comparison of the
+ODC based on COG with GeoCube could form an aspect of our future work.
+The alignment of multi-source data with different spatial and temporal resolutions
+is a challenge, which often requires re-sampling, re-projection, and various preprocess-
+ing steps such as radiometric and geometric correction. Therefore, ARD is suggested
+as the input for the EO data cube. ARD is currently a popular term in the EO domain
+for satellite imagery data products. It is commonly defined as a type of products fol-
+lowing a series of preprocessing operations (Killough et al . 2020). As a multi-source
+geospatial cube infrastructure, GeoCube contains satellite imagery data, as well as vec-
+tor and tabular data. At present, no definition for vector and tabular ARD is available.
+Based on the experience in this work, it is possible to suggest a definition of ARD
+from the data production and computational perspectives. Regarding data production,
+vector and tabular ARD mean that the data are quality assured at different levels in
+terms of completeness, consistency, and accuracy. From a computational perspective,
+vector and tabular ARD need to be organized in a high-performance ready and spa-
+tially aligned form, for example, tiling and using formats such as COG.
+The GeoCube kernel API remains an ad-hoc interface (e.g. QueryParams), and inter-
+operability is an issue in data cube communities. The OGC Testbed-17 is currently
+exploring the identification of a neutral definition of Geo Data Cubes (GDCs) and the
+development of a Web API for convenient, interoperable GDC access and exploitation
+(OGC 2021). Moreover, CEOS has suggested the use of the ODC in various countries,
+such as Colombia and Switzerland, with the aim of alleviating the interoperability issue
+(CEOS 2021). Finally, the OGC coverage model can be used to represent a multi-
+1878 F. GAO ET AL.

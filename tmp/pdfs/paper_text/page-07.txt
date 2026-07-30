@@ -1,0 +1,62 @@
+possibility of implementing a data cube consisting of multi-source and heterogeneous
+geospatial data that share several common dimensions.
+2.3. EO data cube
+Data cubes have gained increasing attentions in recent years and have exhibited great
+promise in the EO domain for extracting useful information from big EO data
+(Baumann et al . 2016, Giuliani et al . 2017, Sudmanns et al . 2019, Schramm et al . 2021).
+An EO data cube can be defined as a time-series multi-dimensional (space, time, and
+data type) stack of spatially aligned pixels that are ready for analysis (Nativi et al .
+2017). Although existing EO data cubes focus on images, in this study, the cube con-
+cept is extended to cover other geospatial data sources, such as vector data, thereby
+providing a multi-source geospatial data cube.
+Table 2 presents a comparison of three typical EO data cubes and the proposed
+GeoCube. The EarthServer data cube was created using the Rasdaman Array Database
+system (Baumann et al . 1999). It supports intercontinental-scale data management, ad-
+hoc extraction, and processing (Baumann et al . 2016, 2018). The cube can use either
+the PostgreSQL database or file systems to store data, although the PostgreSQL option
+has recently been deprecated. The metadata are represented using the OGC
+Geography Markup Language Coverages (GMLCOV) specification, which is stored in
+PostgreSQL or SQLite. Multiple data indexing methods are supported, such as the
+R þ tree and regular computed index. The EarthServer data cube supports the Web
+service interface that is provided by the Petascope on top of Rasdaman, including the
+OGC Web Coverage Service (WCS) and Web Coverage Processing Service (WCPS).
+Table 2. Comparison of different data cubes.
+EarthServer
+data cube Open data cube Earth system data cube GeoCube
+Data source Raster data Raster data Raster data Raster data/
+vector data
+Spatial OLAP No No No Yes
+Computing pattern HPC HPC HPC HPC/AI-enabled
+computational
+intensity
+prediction
+Data organization Raster tile Raster tile Raster tile Raster tile/vector tile
+Metadata PostgreSQL/SQLite
+(GMLCOV model)
+PostgreSQL (JSONB) File system (config file) PostgreSQL (fact
+constellation
+schema)
+Array-based
+interface provided
+Yes Yes Yes Yes
+Data indexing Tile indexing Scene and tile indexing Tile indexing Tile indexing
+Data ingestion Mandatory Optional Mandatory Mandatory
+User interaction WCS/WCPS,
+rasql,
+Cþþ/Java/R/
+JavaScript API
+WCS/WMS/WPS,
+Jupyter Notebook,
+Python API
+FTP/WCS,
+Jupyter Notebook,
+Python/Julia/R API
+OGC API –
+Coverages/
+Processes,
+OGC Data Access
+and Processing
+API, Jupyter
+Notebook,
+Scala/Python API
+1858 F. GAO ET AL.

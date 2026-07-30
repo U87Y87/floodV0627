@@ -1,0 +1,43 @@
+identifiers, thereafter, the Intersection operation can be performed between the raster
+and vector data in the same spatial and temporal space. This example may involve
+more roll up aggregations, such as the spatial merge function for tile mosaics along
+the spatial dimension and the sum function for the total affected population calcula-
+tion along the spatial dimension.
+3.2. Cube tile processing using cloud computing
+It is important to understand how data are organized in high-performance forms for
+efficient cube processing. This section explains the leveraging of cloud computing to
+design distributed cube objects for tiles, thereby facilitating high-performance distrib-
+uted computing.
+3.2.1. Distributed cube objects for tiles. Distributed cube objects for tiles are
+designed by bridging tiles with distributed objects in cloud computing. The raster
+data are segmented into tiles with a uniform projection and resolution in terms of the
+spatial dimension in the cube. The vector data are segmented into logical tiles to
+maintain their topology. A logical tile means that the vector data are not physically
+segmented yet attached to a grid if the vector intersects with the grid. This can help
+to preserve the geometric information of the vector data and facilitate their parallel
+spatial analysis. The data tiles are organized at certain time intervals, such as a day,
+week, month, and year in the temporal dimension, whereas the tiles are organized
+according to the classification of the product/band types in the product/band dimen-
+sion. Therefore, the raster tiles can be described by the product/band, spatial, and
+temporal dimensions, whereas vector tiles can be described using the product, spatial,
+and temporal dimensions.
+Typical software, such as Apache Spark, includes distributed objects for HPC in
+cloud computing. The core object model is the Spark RDD class. Thus, it is possible to
+combine the distributed computing capability of the Spark RDD with the tiles in the
+cube, which results in data parallelism in HPC. Subsequently, a set of distributed cube
+objects is employed for the cube tiles. Figure 4 presents the hierarchy and transforma-
+tions of the objects. CubeRDD[T] is the top class that contains a collection of key-value
+pairs, which are inherited from the abstract RDD class. The key type of CubeRDD[T] is
+fixed (i.e. the SpaceTimeProductKey class), and involves the product, spatial and tem-
+poral dimensions, which are common dimensions for multi-source geospatial data,
+including raster and vector data. The value type T is a geospatial data type (e.g. raster
+and vector tile). It is designed to support multi-source data, thereby making the cube
+objects extensible, which results in the accommodation of additional data types such
+as trajectory data. CubeRDD[T] also provides grid layouts, spatial and temporal extents,
+and CRS information.
+The RasterRDD for raster data and FeatureRDD for vector data are designed based on
+CubeRDD[T]. A RasterRDD can be transformed from a CubeRDD[RasterTile], where the
+RasterTile class contains band information and an array of pixel data. Thus, RasterRDD
+can contain the band dimension in addition to the product, spatial, and temporal
+dimensions. A FeatureRDD can be transformed from a CubeRDD[FeatureCollection],
+1864 F. GAO ET AL.

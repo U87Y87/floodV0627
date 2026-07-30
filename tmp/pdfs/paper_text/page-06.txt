@@ -1,0 +1,43 @@
+represent the analysis axes and a measure is a numerical variable that is identified by
+a combination of dimensions. A dimension can be organized into levels hierarchically,
+with each level corresponding to a different granularity for that dimension (Damiani
+and Spaccapietra 2008). Considering a marketing sales example, a set of dimensions
+can be defined, such as the location, time, and product type. The measure can be
+defined by the values of the sales. Thus, it can be identified using the location, time,
+and product type dimensions. Among these dimensions, the time dimension can be
+represented by different levels, such as day, month, and year, so that the values of the
+sales can be aggregated along the dimension (Rivest et al . 2001).
+A BI data cube is always used with the OLAP approach. OLAP can store different
+cube versions of a dataset at different aggregation levels, thereby providing complex
+and fast aggregation processes to summarize the data (Kasprzyk and Devillet 2021).
+OLAP defines several operations for users to explore a data cube (Chaudhuri and
+Dayal 1997):
+/C15 trim and slice, which performs data selection along dimensions;
+/C15 roll up, which moves up along one or more dimensions towards more aggre-
+gated data;
+/C15 drill down, which moves down along one or more dimensions towards more
+detailed data; and
+/C15 pivot, which reorients the data cube for a different view.
+Spatial attribute is an important dimension of geospatial data. The straightforward
+use of an OLAP dimension as a spatial dimension cannot support the aggregation
+processes of spatial entities. Therefore, SOLAP was proposed, which defines the mean-
+ings of the spatial dimension and spatial measure (Han et al . 1998). The spatial dimen-
+sion is associated with a geometric entity, which may have different spatial
+granularities, such as country, province, and city. A spatial measure is a collection of
+pointers for the spatial entities (Han et al . 1998, Bimonte et al . 2010). Thus, the spatial
+dimension is similar to a spatial index, whereas the spatial measure is similar to a col-
+lection of spatial features. Such a model makes it possible to perform spatial aggrega-
+tion functions, such as intersection and union, by means of which a set of geometries
+can be returned from the spatial measure (Silva et al . 2008).
+OLAP provides multiple methods for implementing data cubes in databases. The
+most commonly used methods are the star, snowflake, and fact constellation schemas
+(Chaudhuri and Dayal 1997). In the star schema, the data cube is represented as a
+star, the center of the star is a fact (i.e. measures in cube cells) table, and the points
+surrounding the star consist of dimension tables (Kimball and Ross 2011). Although
+the star schema is the simplest implementation of the data cube model in a database,
+it cannot explicitly support dimension hierarchies. Therefore, the snowflake schema
+was developed to refine the star schema. In the snowflake schema, the dimension
+hierarchy can be represented by normalizing the dimension tables. The fact constella-
+tion schema is more flexible because it allows multiple fact tables to share the dimen-
+sion tables in a database (Chaudhuri and Dayal 1997). In this manner, it provides the
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1857

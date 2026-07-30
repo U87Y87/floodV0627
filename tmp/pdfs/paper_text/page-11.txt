@@ -1,0 +1,44 @@
+the completeness of the vector features. The resolution of the spatial grid is customiz-
+able, e.g. a 1 /C2 1 grid tile (grid size) that consists of 4000 /C2 4000 pixels (pixel size). The
+grid type table is used for recoding the layout of a grid, including the grid and pixel
+sizes, as well as the coordinate reference system (CRS). The CRS may be the World
+Geodetic System 1984 (WGS 84) or a projected coordinate reference system such as
+the Universal Transverse Mercator, depending on user specification. A grid code is
+assigned to each tile to enable the indexing of the grid tiles. The code follows Z-order
+curve-based encoding so that contiguous tiles are assigned to the same node, and
+thus, the query and computing performance can be improved owing to the reduced
+communication cost. When a bounding box query is considered, the grids with which
+the bounding box intersects will be determined first, following which the grids that
+are encoded using the Z-order curve can be found in the database. The tile data that
+are identified by the grid codes are often located in the same node. The city and prov-
+ince names can be used to support certain OLAP aggregation operations.
+3.1.3. Temporal dimension
+This dimension specifies the temporal axis for the geospatial data using the phenom-
+enon time and result time. The phenomenon time is the time when the observation is
+captured such as the acquisition time for satellite imagery and the update time for
+vector and tabular data, whereas the result time is the time when the result becomes
+available once all processing steps have been completed. Data querying or subsetting
+along the temporal dimension can be performed using the phenomenon time.
+3.1.4. Band dimension
+This dimension describes the band attribute of the raster products according to the
+band name, polarization mode that is reserved for SAR images, and product-level
+band. The product-level band is the information that is extracted from the original
+bands. For example, the Normalized Difference Water Index (NDWI) band is a product-
+level band that is generated from original green and near-infrared bands.
+The model allows one or multiple cubes to be created based on user specifications.
+Each cube has a uniform spatial resolution and a CRS. Multiple cubes can be created
+for multiple datasets, which aids in preserving the original information. It is possible
+to perform queries across different cubes, and subsequently to re-sample and re-pro-
+ject different cube data into a uniform spatial resolution and datum. Furthermore, a
+cube in which multi-source datasets are spatially aligned can be created. This option
+requires the re-sampling and re-projection of the dataset into a uniform spatial reso-
+lution and datum. The cube management part in Figure 2 presents the cube meta-
+data schema.
+The dimension formalization part in Figure 2 follows a fact constellation schema.
+The raster, vector, and tabular tile fact tables share product, spatial, and temporal
+dimensions. The tabular data have the minimum requirement of the spatial dimension
+being ingested in a spatially aligned cube. This can be achieved by a place name attri-
+bute in the table data, which can subsequently be transformed into the spatial dimen-
+sion using existing geocoding services. Two types of measures are used in the cube
+data model: data and computational measures. The data measure is a reference to a
+1862 F. GAO ET AL.

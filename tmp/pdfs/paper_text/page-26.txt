@@ -1,0 +1,46 @@
+difference between EO and BI data cubes is that the pixels in EO data cubes are very
+dense, whereas the elements in BI data cubes are always sparse, which may limit the
+use of the BI OLAP approach for EO data cubes. Although both cubes can define the
+dimensions and facts/cells, a key challenge is the management of densely populated
+pixels in a high-performance form. The high-performance form should be capable of
+dealing with EO images, as well as accommodating multi-source geospatial data by
+considering their spatial heterogeneity and different data structures. To address these
+issues, this study has presented an augmented cube with multi-source geospatial data
+ingestion and management as well as the processing of multiple source data in a
+cloud computing environment. Such a cube can inherit the large-scale processing
+capabilities of EO data cubes and the data management capabilities of BI data cubes.
+Several dimensions are customized for the raster and vector data in the cube mod-
+eling. However, this model is not limited to raster and vector data, it can be extended
+to accommodate more data sources, such as trajectory data, by incorporating fact and
+dimension tables. This capability is borrowed from BI data cubes. Furthermore, this
+approach enables OLAP/SOLAP operations on the cube data, which can be performed
+on the fly or using the precomputing mode. The latter computes several commonly
+used products in advance so that storage can be traded in for a rapid response to
+users (Han et al . 1998, Koperski et al . 1998).
+The integration of multi-source geospatial data is performed under the premise of
+the cell granularity and shared formalization of the dimensions for the multi-source
+data. As opposed to existing EO cubes, the proposed method introduces the idea of
+SOLAP in traditional BI cubes by adding the spatial measure. Thus, the cell is not the
+pixel of existing EO cubes, but may be a group of pixels and a set of spatial entities in
+terms of the raster and vector, respectively. Furthermore, it is assumed that the raster/
+vector/tabular data can have the same spatial dimension in a spatially aligned cube.
+Although this requirement is sufficient for raster and vector data, it is not often the
+case for tabular data. In the experiment that was conducted in this study, we assumed
+that the population tabular data had place names, which could be geocoded and
+transformed into the spatial dimension. If this is not the case, it is possible to create a
+BI cube for the tabular data and to set up a common dimension based on the com-
+mon attributes in the vector/tabular data. Thus, integration may still occur based on
+the joint connection in a common dimension instead of the spatial dimension.
+The data cube requires the re-organization of external data into a high-performance
+form. This involves the duplication of data during the data ingestion, which will
+increase the overhead. Typically, the overhead includes the storage overhead as well
+as the potential re-sampling and re-projection overhead for spatial alignment. Thus, it
+will be valuable to explore the optimization of the duplication, such as a zipped form,
+distributed files, or NoSQL solutions. Parallel data ingestion is also possible, for
+example, in a cloud environment, the rationale for which is the same as that of OLAP
+in terms of trading in storage for rapid responses.
+Cloud computing has been used extensively in geospatial infrastructure. It can sig-
+nificantly improve the data storage and processing capabilities of cubes. Although the
+cloud may lead to other issues such as privacy and accessibility, cube vendors can opt
+to deploy the private cloud on their own hardware using open solutions, thereby
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1877

@@ -1,0 +1,44 @@
+Boyi Shangguan is a Ph.D. student in the School of Remote Sensing and Information
+Engineering at Wuhan University. His research interest is in high-performance geoprocessing
+and GIService. He contributed to the idea, methodology, and implementation.
+Liangcun Jiang is an associate research fellow in the School of Remote Sensing and Information
+Engineering at Wuhan University. His research interests include Earth observation data infra-
+structure, data provenance, and geospatial semantic web. He contributed to the idea, study
+design, and methodology.
+Lei Hu is a postdoctoral researcher in the School of Remote Sensing and Information
+Engineering at Wuhan University. His research interests include Earth observation science and
+systems, geospatial interoperability and standards, and environmental modelling in agriculture
+and disaster management. He contributed to the idea, study design, and methodology.
+Zhe Fang is a Ph.D. student in the School of Remote Sensing and Information Engineering at
+Wuhan University. His research interest is in disaster emergency response. He contributed to the
+idea, methodology, and implementation.
+Zheheng Liang is the chief engineer of South Digital Technology Co., Ltd. He currently is the
+special reviewer of the journal ‘Geographic Information World ’, and an expert in the comprehen-
+sive evaluation expert database of Guangdong Province. He contributed to the idea, study
+design, and methodology.
+ORCID
+Peng Yue http://orcid.org/0000-0003-3006-4542
+Data and codes availability statement
+The data and codes that support the findings of this study are available in https://doi.org/
+10.6084/m9.figshare.15032847.
+References
+Baumann, P., 2017. The datacube manifesto [online]. EU EarthServer. Available from: https://earth-
+server.eu/tech/datacube-manifesto/The-Datacube-Manifesto.pdf [Accessed 22 July 2021].
+Baumann, P., 2018. Datacube standards and their contribution to analysis-ready data. In : 2018
+IEEE international geoscience and remote sensing symposium (IGARSS), 22 –27 July 2018 Valencia.
+New York: IEEE, 2051 –2053.
+Baumann, P., et al. , 1999. Spatio-temporal retrieval with RasDaMan. In : Proceedings of 25th inter-
+national conference on very large data bases, 7 –10 September 1999 Edinburgh. Burlington:
+Morgan Kaufmann, 746 –749.
+Baumann, P., et al. , 2016. Big data analytics for earth sciences: the EarthServer approach.
+International Journal of Digital Earth , 9 (1), 3 –29.
+Baumann, P., et al. , 2018., Fostering Cross-Disciplinary Earth Science Through Datacube
+Analytics. In : P.P. Mathieu and C. Aubrecht, eds. Earth observation open science and innovation .
+Switzerland: Springer Cham, 91 –199.
+Berrick, S., et al. , 2009. Giovanni: a web service workflow-based data visualization and analysis
+system. IEEE Transactions on Geoscience and Remote Sensing , 47 (1), 106 –113.
+Bimonte, S., et al. , 2010. When spatial analysis meets OLAP: multidimensional model and opera-
+tors. International Journal of Data Warehousing and Mining , 6 (4), 33 –60.
+CEOS, 2021. Open Data Cube [online]. CEOS. Available from: https://www.opendatacube.org/ceos
+[Accessed 22 July 2021].
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1881

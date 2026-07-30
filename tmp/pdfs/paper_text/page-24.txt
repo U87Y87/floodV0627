@@ -1,0 +1,32 @@
+computing approach, including the multiple processes in cloud computing and mul-
+tiple threads, significantly improved the processing efficiency.
+4.3.3. Load balance performance
+The spatial intersection of vector data is used as an example to demonstrate the load
+balance performance of GeoCube. The original parallel spatial intersection method
+without AI augmentation in GeoCube is a classical method, which is known as the par-
+tition-based spatial-merge join (Patel and DeWitt 1996). The data were decomposed
+based on a regular grid, which ignored the heterogeneity of the data, thereby leading
+to a serious load imbalance.
+This section presents a comparison of the load balance performance of the original
+approach and the AI-enabled CI prediction approach in GeoCube. The vector data were
+collected from OSM covering China and India. Three tests were implemented: the dataset
+in the first test contained two layers with 1.69 and 0.49 million polygons, the dataset in the
+second test contained two layers with 2.50 and 0.82 million polygons, and the dataset in
+the third test contained two layers with 3.00 and 0.87 million polygons. The CI of each vec-
+tor tile is pre-computed using a CI prediction model and saved in a JSON file in the AI
+approach, whereas the CI is ignored in the original approach.
+Figure 14 presents the accuracy of different CI prediction models based on the
+combination of feature selection and machine learning algorithms. The training sample
+contained approximately 1200 records, covering various areas of the datasets. Four
+feature selection algorithms, namely Pearson, recursive feature elimination (RFE), mean
+decrease in impurity (MDI) and mean decrease in accuracy (MDA) are tested together
+with all features (AF), on four machine learning algorithms, namely classification and
+regression tree (CART), random forest (RF), gradient boosting regression (GBR) and
+support vector regression (SVR) (Yue et al . 2020). The two metrics R2 and mean abso-
+lute error (MAE) were used to evaluate the model accuracy under 10-fold cross-valid-
+ation. The results revealed that the model using a combination of MDI and RF
+performed the best. The R2 and MAE of the model were 0.78 and 456 ms, respectively.
+Figure 15 presents the time costs of different stages using the original approach
+and AI-enabled CI prediction approach. With an increase in the number of polygons,
+Figure 13. Data processing efficiency: GeoCube vs. Open Data Cube.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1875

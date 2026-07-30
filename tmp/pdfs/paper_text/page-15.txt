@@ -1,0 +1,35 @@
+resolution image or a grid containing a large number of polygons, which results in a
+high time cost in data processing. Thus, hybrid parallel processing is required for the
+cube processing. Each sub-thread processes only a portion of a tile in the multi-thread
+pool and the processing results are gathered in the main thread. Thus, data processing
+involves multiple processes among the computing nodes and multiple threads in one
+node, thereby forming hybrid parallelism.
+For example, the time period 2017.01.01 to 2020.12.31 can be divided into
+2017.01.01 to 2018.12.31 and 2019.01.01 to 2020.12.31, whereas the spatial extent
+(110
+/C14 E, 25 /C14 N, 120 /C14 E, 35 /C14 N) can be divided into (110 /C14 E, 25 /C14 N, 115 /C14 E, 35 /C14 N) and (115 /C14 E,
+25/C14 N, 120 /C14 E, 35 /C14 N). Subsequently, the batch tiles that are grouped according to the
+aforementioned divisions are accessed and returned as distributed cube objects, which
+are processed in the Spark cloud environment. A multi-thread pool containing eight
+threads can be created in each process, and a tile is divided into eight sub-tiles for
+each thread. The processing results of the threads are gathered, and finally, the results
+of the batches are merged along the dimensions.
+3.3. Cube computing optimization using AI
+The data are organized as tiles that are loaded into distributed computing nodes in
+the cube. Different tiles have different CIs in terms of the geoprocessing algorithms
+and heterogeneous spatial feature distributions. Load balancing is a challenge in cube
+computation, and two methods are commonly used to address this issue: static and
+dynamic scheduling. Dynamic scheduling alleviates the load imbalance by monitoring
+the status of the clusters and assigning tasks to idle computing units. However, the
+advantages of this strategy are limited when the number of tasks is extremely low or
+high. Too few tasks may make it difficult to achieve load balance, whereas too many
+tasks often result in high communication cost. Static scheduling can divide and group
+data into partitions with balanced computational intensity in advance. The accuracy of
+the CI assessment is key to the success of this strategy.
+GeoCube evaluates the CI of the tiles using AI machine learning approaches. This
+work is a continuation of the previous research on the machine learning approach for
+the prediction of the CI in parallel geoprocessing (Yue et al . 2020), which is extended
+to the evaluation of the tile CI. Figure 6 shows how the approach is used in the cube
+infrastructure to predict the CI of the cube tiles. A CI evaluation model for geospatial
+Figure 5. Cube processing using batch computing, cloud computing, and multi-thread computing.
+1866 F. GAO ET AL.

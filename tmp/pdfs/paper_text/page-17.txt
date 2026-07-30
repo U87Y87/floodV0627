@@ -1,0 +1,45 @@
+CIk;i tfdimensionsgðÞ ¼ fk X t dimensionsfg , ti dimensionsfgðÞ
+/C0/C1 , (2)
+where CIk;i /C3ðÞ is the CI value of the tile that is associated with the tile of target prod-
+uct i in geoprocessing k, ti dimensionsfg is the tile of target product i, and X ð/C3Þ returns a
+list of computational features of the two tiles.
+In the n-ary geoprocessing case, each tile has a CI value that is associated with the
+tiles of the other n-1 products in the cube, which can be formalized as follows:
+CIk;L tfdimensionsgðÞ ¼ fk X t dimensionsfg , tl1 dimensionsfg , tl2 dimensionsfg , ... , tln/C0 1 dimensionsfgðÞ
+/C0/C1 ,
+l1, l2, ... , ln/C0 1 2 L,
+(3)
+where CIk;L /C3ðÞ is the CI value of the tile that is associated with the tiles of the other n-
+1 products L in geoprocessing k, tL dimensionsfg is the associated tile list, and X ð/C3Þ returns
+a list of computational features of the n tiles.
+The aforementioned model provides a theoretical basis for setting the CI values in
+the cube. In practical applications, many geoprocessing functions are 1-ary or 2-ary
+cases. The JSON data structure can be used to record the CI values. More specifically,
+the CI values are saved in the fact table from Section 3.1 using JSON files, examples of
+which are depicted in Figure 6 . One is for the geoprocessing on a single product, such
+as spatial buffering, and the other is for geoprocessing between two products, such as
+spatial intersection. In the former, each tile has a single CI value for a specific 1-ary
+geoprocessing function. In the latter, each tile may have a CI value that is associated
+with one of the target products in the cube for a specific 2-ary geoprocessing func-
+tion, under the premise that the target products are semantically acceptable as the
+second input for the 2-ary geoprocessing function. For example, a tile may have CI
+values relating to the tiles of products (#1, #2, … ) in a 2-ary function.
+The tiles can be assigned to computing units for balanced processing based on the
+AI-predicted CI. The CI values are obtained when accessing the cube tiles, which can
+be grouped and assigned to computing units based on the CI values. Subsequently,
+an effective load balance can be achieved in the cube computation.
+4. Implementation and evaluation
+4.1. Implementation
+The cube infrastructure was implemented as the GeoCube software. Figure 7 presents
+the GeoCube implementation architecture. Three types of interfaces are offered to
+users at the front end: Jupyter Notebook, the OGC geospatial Web service, and Web
+UI. The back end includes four modules: the data source, data storage, data access,
+and computing engine modules. The data source module manages multi-source geo-
+spatial data, which can be either EO data, such as Landsat, Gaofen, and Sentinel, vec-
+tor data, such as OSM, or high-level remote sensing products.
+Data from external sources can be downloaded and preprocessed into an analysis-
+ready level. A metadata database is available for managing and indexing the ARD.
+Users can retrieve the ARD based on the metadata and subsequently ingest the data
+into a cube. During the ingestion, the data are re-projected, re-sampled, and divided
+into tiles according to the cube configuration. The cube data storage module manages
+1868 F. GAO ET AL.

@@ -1,0 +1,13 @@
+4.3.1. Data and environment
+In the experiments, the raster data in GeoCube included data from the Landsat-8
+Operational Land Imager sensor with a 30 m resolution, Gaofen 1 Panchromatic &
+Multispectral Scanners with a resolution of 2/8 m, and Wide-Field-of-View sensor with
+a resolution of 16 m. The vector data in the GeoCube were acquired from OSM.
+GeoCube was deployed on three physical servers. Two were Inspure NF5280M4
+servers, each with an Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60 GHz, CentOS Linux
+release 7.3.1611 OS, 28 CPU cores, and 128 GB of RAM. The other was an Inspure
+Figure 10. Flood inundation product (red region) and impacted bridges (red icons) in
+flood disaster.
+Figure 11. Process of extracting impacted villages and affected populations in flood disaster using
+Jupyter Notebook.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1873

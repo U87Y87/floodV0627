@@ -1,0 +1,7 @@
+Zaharia, M., et al. , 2010. Spark: Cluster computing with working sets . In: Proceedings of the 2nd
+USENIX conference on Hot topics in cloud computing ,2 2 –25 June 2010, Boston. California:
+USENIX Association, 10.
+Zarr. 2021. Zarr format [online]. MRC Centre for Genomics and Global Health. Available from:
+https://zarr.readthedocs.io [Accessed 22 July 2021].
+Zhao, P., et al. , 2012. The geoprocessing web. Computers & Geosciences , 47 (10), 3 –12.
+1884 F. GAO ET AL.

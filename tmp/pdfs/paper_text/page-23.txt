@@ -1,0 +1,30 @@
+NF5270M3 server with an Intel(R) Xeon(R) CPU E5-2692 v2 @ 2.20 GHz, Ubuntu 14.04.1
+OS, 24 CPU cores, and 94 GB of RAM. These servers were connected to a high-perform-
+ance storage array with PB-level storage space. Specifically, 84 storage disks were
+included, each of which had 16 TB of data storage.
+4.3.2. Query and processing performance
+In this experiment, the water presence frequency analysis was again used as an
+example, and the performances of the ODC and GeoCube were compared to demon-
+strate the query and processing capability of GeoCube. The ODC and GeoCube were
+deployed in the same environment. ODC 1.8.3 was used, and the image data were
+ingested as tiles and saved in the file system. The Xarray 0.18.0 and Dask 2021.3.0
+libraries were used for the distributed computing.
+Figure 12 presents the data query performances of the ODC and GeoCube, which
+involved tile ID retrieval and tile data loading. It can be observed that the ODC exhib-
+ited better performance than GeoCube when the data volume was small. However, as
+the data volume increased, the time query efficiency of GeoCube was almost same as
+that of ODC. The reason for this phenomenon is that the data are saved in a distrib-
+uted environment in GeoCube. Compared to the ODC, in which the data are saved
+centrally in a local file system, more network communications occur in the querying
+process in GeoCube because the queried data must be obtained from other nodes if
+they are not saved in the current node.
+The distributed storage approach had a certain negative effect on the query effi-
+ciency, however, it could improve the computing efficiency significantly because the
+data already resided in the distributed nodes. Figure 13 presents the processing per-
+formances of the ODC and GeoCube. It can be observed that GeoCube outperformed
+the ODC, regardless of the data volume. GeoCube exhibited a greater time saving
+than the ODC as the data volume increased. There are two reasons for this phenom-
+enon: first, the data resided in the distributed nodes in advance, thereby reducing the
+communication cost during processing, and second, the proposed hybrid parallel
+Figure 12. Data query efficiency: GeoCube vs. Open Data Cube.
+1874 F. GAO ET AL.

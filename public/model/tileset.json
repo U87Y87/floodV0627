@@ -1,0 +1,61 @@
+{
+  "asset": {
+    "version": "1.1",
+    "gltfUpAxis": "Z"
+  },
+  "geometricError": 0,
+  "root": {
+    "boundingVolume": {
+      "box": [
+        0,
+        0,
+        2.5,
+        3.5,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        2.6
+      ]
+    },
+    "geometricError": 0,
+    "refine": "ADD",
+    "transform": [
+      -0.9721829658924155,
+      -0.23422271629503946,
+      0,
+      0,
+      0.12218539286660046,
+      -0.5071521648487405,
+      0.8531514586867155,
+      0,
+      -0.19982745206467764,
+      0.8294193154614916,
+      0.5216632903901994,
+      0,
+      -1275947.8194762894,
+      5296047.945664998,
+      3308655.306651952,
+      1
+    ],
+    "content": {
+      "uri": "house.glb"
+    }
+  },
+  "extras": {
+    "name": "5m textured house",
+    "longitude": 103.545809,
+    "latitude": 31.443888,
+    "terrainHeight": 1292.74,
+    "heightOffset": 0.5,
+    "baseHeight": 1293.24,
+    "dimensionsMeters": {
+      "width": 6,
+      "depth": 5,
+      "height": 5
+    }
+  }
+}

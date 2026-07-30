@@ -1,0 +1,31 @@
+tile, which uses the tile ID for the physical raster tile, vector IDs for the features that
+spatially intersect with a logical vector tile, or tabular IDs for the tabular records that
+spatially intersect with a logical tabular tile. The computational measure consists of
+values that are evaluated based on the computational intensity of the tiles. The follow-
+ing sections describe how to take advantage of the cube data model.
+The formalization of dimensions in the cube data model helps to support OLAP
+operations on geospatial data, such as trim, slice, and roll up. Trim and slice are the
+simplest operations that are used for geospatial data in a cube (Baumann 2017,
+Voidrot and Percivall 2020). Trim selects multiple values along varying dimensions,
+whereas slice can produce a sub-cube of reduced dimensions by selecting a single
+value along a dimension. Figure 3(a) depicts a trim operation along the temporal and
+spatial dimensions, which can return a stack of tiles within a given spatial extent and
+time. A slice operation along the band and temporal dimensions is illustrated in
+Figure 3(b) . Several interfaces for querying cube data have been presented, such as
+getData($QueryParams), which is used to access raster/vector/tabular data. The
+QueryParams class can be initiated using a cube identifier and a set of dimensional
+information.
+Roll up is a more complex OLAP operation, it is a data aggregation process along
+different dimension levels, such as the grid/city/province in the spatial dimension,
+day/month/year in the temporal dimension, original/product-level band in the band
+dimension, and different-level products in the product dimension. The results of the
+OLAP operation can be pre-computed and saved to create a new cube of different
+dimension levels, leading to a faster response from the user. Considering a flood disas-
+ter example, intersection analysis is performed between inundation images (a type of
+raster data) and villages (a type of vector data) to identify flooded villages ( Figure
+3(c)). Aggregation occurs along the product dimension, the flooded village is a higher-
+level product, which can help to create a new cube with a higher-level product
+dimension. The aggregation involves the Join and Intersection operations. The Join
+operation is used to join the multi-source data based on the spatial and temporal
+Figure 3. Cube OLAP operations.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1863

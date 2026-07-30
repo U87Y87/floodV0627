@@ -1,0 +1,16 @@
+Figure 9 presents the results of the water presence frequency analysis, which are
+derived from Landsat 8 images covering Hubei province from 2013 to 2018. High val-
+ues in the results indicate that the region is detected as the water body most of the
+time, and vice versa. The analysis considers the benefits of GeoCube for batch process-
+ing, cloud computing, and multi-thread computing. The tiles are divided into batches
+along the spatial dimension to ensure a full time-series stack of tiles. Approximately 1
+TB of data are used in the analysis. Approximately 1.4 h are required to load the data
+into memory and 1 h is required to complete the processing. A more comprehensive
+performance analysis is provided in Section 4.3.2 .
+4.2.3. Multi-source data cube analysis
+GeoCube differs from existing cube approaches in that it can support multi-source
+data analysis in cubes. This section presents a flood disaster case as an example to
+demonstrate how multi-source data are used in GeoCube for a rapid response. It is
+assumed that the disaster was caused by a tropical cyclone striking southern China
+Figure 8. OLAP operations in GeoCube.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1871

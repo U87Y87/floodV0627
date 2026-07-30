@@ -1,0 +1,55 @@
+Lewis, A., et al. , 2018. CEOS analysis ready data for land (CARD4L) Overview. In: IEEE international
+geoscience and remote sensing symposium (IGARSS), 22 –27 July 2018. Valencia, New York: IEEE,
+7407–7410.
+LLNL, 2021. Introduction to Parallel Computing Tutorial [online]. Lawrence Livermore National
+Laboratory (LLNL). Available from: https://hpc.llnl.gov/training/tutorials/introduction-parallel-
+computing-tutorial [Accessed 22 July 2021]
+Mahecha, M.D., et al. , 2020. Earth system data cubes unravel global multivariate dynamics. Earth
+System Dynamics , 11 (1), 201 –234.
+Momjian, B., 2001. PostgreSQL: introduction and concepts . New York: Addison-Wesley.
+Mueller, N., et al. , 2016. Water observations from space: mapping surface water from 25 years of
+Landsat imagery across Australia. Remote Sensing of Environment , 174 (1), 341 –352.
+Nativi, S., et al. , 2017. A view-based model of data-cube to support big earth data systems inter-
+operability. Big Earth Data. ,1( 1 –2), 75 –99.
+OGC, 2021. Testbed-17. OGC testbed initiative [online]. OGC. Available from: https://portal.ogc.
+org/files/?artifact_id=95726 [Accessed 22 July 2021].
+Patel, J.M., and DeWitt, D.J., 1996. Partition based spatial-merge join. ACM SIGMOD Record ,2 5
+(2), 259 –270.
+Pedregosa, F., et al. , 2011. Scikit-learn: machine learning in Python. Journal of Machine Learning
+Research, 12 (10), 2825 –2830.
+Purss, M.B.J., et al. , 2019. Datacubes: a discrete global grid systems perspective. Cartographica,
+54 (1), 63 –71.
+Rasdaman, 2021. Raster data manager [online]. Rasdaman GmbH. Available from: http://rasda-
+man.com [Accessed 22 July 2021].
+Rivest, S., et al. , 2001. Toward better support for spatial decision making: defining the character-
+istics of spatial on-line analytical processing (SOLAP). Geomatica, 55 (4), 539 –555.
+Schramm, M., et al. , 2021. The openeo api –harmonising the use of earth observation cloud serv-
+ices using virtual data cube functionalities. Remote Sensing , 13 (6), 1125.
+Silva, J.D., et al. , 2008. A set of aggregation functions for spatial measures. In : Proceedings of the
+ACM 11th international workshop on Data warehousing and OLAP, 30 October. Napa Valley,
+New York: ACM Digital Library, 25 –32.
+Spring Boot, 2021. Spring [online]. VMware, Inc. Available from: https://spring.io/projects/spring-
+boot [Accessed 22 July 2021].
+Strobl, P., et al. , 2017. The six faces of the data cube. In : Proceedings of big data from space con-
+ference, 28 –30 November 2017 . Toulouse. Luxembourg: Publications Office of the European
+Union, 28 –30.
+Sudmanns, M., et al. , 2019. Big Earth data: disruptive changes in earth observation data manage-
+ment and analysis? International Journal of Digital Earth , 13 (7), 832 –850.
+Voidrot, M.F., and Percivall, G., 2020. OGC geospatial coverages data cube community practice.
+Vol. 509. In: 11th International symposium on digital earth, 24 –27 September 2019. Florence.
+Bristol: IOP Publishing, 012058.
+Wagemann, J., et al. , 2018. Geospatial web services pave new ways for server-based on-demand
+access and processing of big earth data. International Journal of Digital Earth , 11 (1), 7 –25.
+White, T., 2012. Hadoop: The definitive guide . California: O ’Reilly Media Inc.
+Wulder, M.A., and Coops, N.C., 2014. Satellites: make earth observations open access. Nature,
+513 (7516), 30 –31.
+Xarray, 2021. N-D labeled arrays and datasets in Python [online]. NumFOCUS. Available from:
+http://xarray.pydata.org/en/stable [Accessed 22 July 2021].
+Yue, P., et al. , 2010. GeoPW: laying blocks for the geospatial processing web. Transactions in GIS ,
+14 (6), 755 –772.
+Yue, P., et al. , 2016. Recent activities in earth data science. IEEE Geoscience and Remote Sensing
+Magazine, 4 (4), 84 –89.
+Yue, P., et al. , 2020. A machine learning approach for predicting computational intensity and
+domain decomposition in parallel geoprocessing. International Journal of Geographical
+Information Science , 34 (11), 2243 –2274.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1883

@@ -1,0 +1,43 @@
+example, users can access the standard coverage data instead of the cube tiles by
+using the OGC Coverages API. The Web-based interactive development environment is
+created using Jupyter Notebook (Jupyter 2021), and Cesium 1.71 is used for the data
+visualization (Cesium 2021).
+4.2. Proof of concept
+4.2.1. Cube OLAP operations
+GeoCube enables users to navigate among the levels of the cube data, ranging from
+the most detailed to the most aggregated. For example, ‘year’ is a more aggregated
+level than ‘month’ and ‘day’ in the temporal dimension. This section provides an
+example of how to explore the cube data at two different levels. Figure 8(a) presents
+the NDWI analysis using the most detailed levels of spatial, temporal, and band
+dimensions. The level requests users to provide the spatial extent in the form of longi-
+tude/latitude (WGS 84), the time range that is specific to the ‘day’, and the original
+sensor bands. The spatial extent is transformed into a series of Z-order curve codes of
+covered grids. As designed in the cube data model, the grid is the most detailed level
+of the spatial dimension. Similarly, the day and original sensor band are the most
+detailed levels of the temporal and band dimensions, respectively.
+Figure 8(b) depicts the NDWI analysis at a more aggregated level. Users can provide
+a city or province name in the spatial dimension. A city or province covers a number
+of grids that are more aggregated than the grid. The data that are covered by the city
+‘Wuhan’ are used to derive the NDWI product in Figure 8(b) . Query parameters that
+are more aggregated than the day, such as the month and year, are supported in the
+temporal dimension. The cube data with the same month or year can be aggregated.
+Data from 2017 are used to derive the NDWI product in Figure 8(b) . The product-level
+band is more aggregated than the original band in the band dimension. For example,
+the NDWI band is more aggregated than the original bands, including green and
+near-infrared bands. The two bands can be aggregated to perform the map algebra
+operation to calculate the NDWI band.
+The results that are derived from the aggregated-level analysis can be pre-com-
+puted and saved to create a new cube, which is defined by more aggregated-level
+dimensions. For example, the spatial dimension comprises cities such as Wuhan
+instead of grids, the temporal dimension consists of years such as 2017 instead of
+days, and the band dimension comprises product-level bands such as NDWI instead of
+the original bands. The precomputing approach can lead to a faster response to users
+by querying the new cube instead of performing computation on the fly.
+4.2.2. Large-scale time-series geoprocessing
+A significant benefit of the cube is that it supports large-scale time-series geoprocess-
+ing. We use the computation of the water presence frequency analysis as an example.
+It is a time-series analysis that detects the presence of water during a period and sum-
+marizes the results as the number of times that water is detected at each pixel. The
+analysis involves spatial merging (i.e. tile mosaics) and temporal aggregation (i.e. pixel
+value averaging) (Mueller et al . 2016).
+1870 F. GAO ET AL.

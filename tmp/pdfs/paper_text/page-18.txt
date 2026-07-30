@@ -1,0 +1,22 @@
+the tiles by leveraging both the relational and NoSQL databases: the dimension and
+fact tables are managed using relational databases, whereas the raster and vector data
+tables are managed using distributed NoSQL databases. The raster data table records
+the tile ID and tile data bytes. The vector data table records the vector data IDs, geo-
+metric information that is encoded using well-known text (WKT), and attributes that
+are encoded using JSON. The data access module supports multi-dimensional queries
+for geospatial data along the spatial, temporal, product, and band dimensions.
+The computing engine module integrates cloud computing with the distributed
+cube objects and AI-enabled CI prediction method to improve the computing per-
+formance of the cube data processing, such as the map algebra, time-series analysis,
+spatial analysis, and multi-source joint analysis.
+In GeoCube, the fact constellation schema is implemented using PostgreSQL 9.3.24
+(Momjian 2001), and the raster and vector tiles are saved in HBase 1.4.13 (George
+2011), which is built on Hadoop 2.7.4 (White 2012). Spark 2.4.3 (Zaharia et al . 2010)
+and Geotrellis 3.0.0 (Geotrellis 2021) are used to develop the distributed memory cube
+objects, which are used for the parallel data ingestion, data access, and data process-
+ing. The machine learning algorithms are implemented using Python 3.7 and Scikit-
+learn 0.20.3 (Pedregosa et al . 2011). The OGC Web services are implemented using
+Springboot 2.3.1 (Spring Boot 2021). The standard service interface allows users to
+access the cube data and perform cube functions in an interoperable manner. For
+Figure 7. Implementation architecture of GeoCube.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1869

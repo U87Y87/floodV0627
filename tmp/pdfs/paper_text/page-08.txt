@@ -1,0 +1,44 @@
+These service requests can be translated into the Rasdaman Query Language (RaSQL)
+and executed in the Rasdaman database (Rasdaman 2021).
+The Open Data Cube (ODC) initiative is an open-source project that was launched
+by the Committee on Earth Observation Satellites (CEOS) (CEOS 2021, Gomes et al .
+2021). The objective of the ODC is to lower technical barriers and to provide a solution
+for national or local agencies to create data cubes that are similar to the Australian
+geoscience data cube, Colombia data cube, and Swiss data cube (Lewis et al . 2017,
+CEOS 2021). The ODC can manage large amounts of satellite data and process
+national-scale or even continent-scale satellite data using HPC technologies. It allows
+to store data in the original format or ingest data in a high-performance tile format.
+The former adopts the traditional scene-based index, whereas the latter uses tile-based
+index. The same API can be enforced on top of the two organizing forms, although
+the former option was recently recommended for the ODC. The Dask parallel comput-
+ing engine can be used in the ODC for parallel Earth science, satellite imagery, and
+time-series analyses (Dask 2021). Unlike the Dask in the ODC, Apache Spark (Zaharia
+et al . 2010) is selected for GeoCube, because it has a wider user base in open-source
+cloud computing communities, with more programming languages and a comprehen-
+sive software ecosystem covering Hadoop, HBase, and Geotrellis. In the ODC, the EO
+data in the tile format are stored using the Network Common Data Form (NetCDF).
+The metadata are encoded using the JSONB format and managed in the PostgreSQL
+database (Lewis et al . 2017). Five relational tables are leveraged to manage the cube
+data. Furthermore, the ODC provides the Web service interface, including the OGC
+WCS, Web Map Service (WMS), and Web Processing Service (WPS) (Voidrot and
+Percivall 2020).
+The objective of the Earth System Data Cube (ESDC) is to explore various EO raster
+data streams simultaneously to enable joint analysis. Multiple data streams are inte-
+grated into a single high-dimensional data cube. The infrastructure provides the same
+data cube at different spatial resolutions and chunkings to accelerate data access for
+different applications (Mahecha et al . 2020). The cube data are encoded using the Zarr
+format (Zarr 2021), which is a format that is optimized for cloud storage. The ESDC
+uses a file system directory to organize the data, and each cube instance has a config-
+uration file for describing the spatial and temporal resolution. The ESDC enables data
+retrieval and downloading via file transfer protocol (FTP). Moreover, the OGC WCS and
+Jupyter Notebook are supported for data access and analytics (ESDC 2021).
+2.4. Contributions of the work
+This study presents a new cube infrastructure for big geospatial data analysis. The
+method differs from existing cube approaches in the following aspects: (1) The infra-
+structure supports the accommodation of multi-source geospatial data, including ras-
+ter and vector data in the cube. The multi-source data are segmented into a tile form
+in a NoSQL database, ready for HPC, thereby enabling the user to perform efficient
+multi-source data analysis using the high-performance tile form. (2) The infrastructure
+supports large-scale and joint analysis for cube tiles using a cloud-based cube object.
+It is compatible with multiple data sources, which can help solving the problem of the
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1859

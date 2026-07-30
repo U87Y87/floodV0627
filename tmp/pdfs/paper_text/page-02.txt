@@ -1,0 +1,53 @@
+RESEARCH ARTICLE
+A multi-source spatio-temporal data cube for large-scale
+geospatial analysis
+Fan Gao a, Peng Yue a,b,c , Zhipeng Cao a, Shuaifeng Zhao a,
+Boyi Shangguan a, Liangcun Jiang a, Lei Hu a, Zhe Fang a and Zheheng Liang d
+aSchool of Remote Sensing and Information Engineering, Wuhan University, Wuhan, Hubei, China;
+bCollaborative Innovation Center of Geospatial Technology, Wuhan, Hubei, China; cHubei Province
+Engineering Center for Intelligent Geoprocessing (HPECIG), Wuhan University, Wuhan, Hubei, China;
+dSouth Digital Technology Co, Ltd., Guangzhou, Guangdong, China
+ABSTRACT
+Data management and analysis are challenging with big Earth
+observation (EO) data. Expanding upon the rising promises of
+data cubes for analysis-ready big EO data, we propose a new geo-
+spatial infrastructure layered over a data cube to facilitate big EO
+data management and analysis. Compared to previous work on
+data cubes, the proposed infrastructure, GeoCube, extends the
+capacity of data cubes to multi-source big vector and raster data.
+GeoCube is developed in terms of three major efforts: formalize
+cube dimensions for multi-source geospatial data, process geo-
+spatial data query along these dimensions, and organize cube
+data for high-performance geoprocessing. This strategy improves
+EO data cube management and keeps connections with the busi-
+ness intelligence cube, which provides supplementary information
+for EO data cube processing. The paper highlights the major
+efforts and key research contributions to online analytical process-
+ing for dimension formalization, distributed cube objects for tiles,
+and artificial intelligence enabled prediction of computational
+intensity for data cube processing. Case studies with data from
+Landsat, Gaofen, and OpenStreetMap demonstrate the capabilities
+and applicability of the proposed infrastructure.
+ARTICLE HISTORY
+Received 23 July 2021
+Accepted 5 June 2022
+KEYWORDS
+Data cube; high-
+performance computing;
+earth observation; cloud
+computing; artificial
+intelligence
+1. Introduction
+Earth observation (EO) data, a prime source of big data, comprise large-scale and
+multi-source geospatial data that are acquired from orbital sensors, in-situ measure-
+ments, and simulation models (Baumann et al . 2018, Wagemann et al . 2018). The man-
+agement of EO data is challenging owing to the demand for the integration of
+multiple data sources, high-performance processing, and diverse applications of EO
+data. These multi-source EO data are characterized by the difference in spatial, tem-
+poral, and spectral resolutions, varying conditions in observations (e.g. different atmos-
+pheric conditions and viewing geometries), and diverse spatial data structures (e.g.
+CONTACT Peng Yue pyue@whu.edu.cn
+/C2232022 Informa UK Limited, trading as Taylor & Francis Group
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE
+2022, VOL. 36, NO. 9, 1853 –1884
+https://doi.org/10.1080/13658816.2022.2087222

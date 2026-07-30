@@ -1,0 +1,30 @@
+raster and vector data) (Lewis et al . 2016). These characteristics make EO data integra-
+tion, storage, and processing a challenging topic.
+Recent advances in information infrastructures have shown significant promises for
+EO data processing (Yue et al . 2016, Sudmanns et al . 2019)( Figure 1 ). Several para-
+digm shifts occurred in the EO domain between the 1990s and 2000s. In the local
+processing paradigm, EO data are often downloaded from data portals and processed
+in local machines. This may result in high network bandwidth resources and time
+costs. The capabilities of users are limited in solving large-scale geospatial problems
+owing to insufficient local storage space and computing power (Wulder and Coops
+2014, Kopp et al . 2019). The development of Web technologies and geospatial Web
+services has made it possible for users to discover, access, and process geospatial data
+on spatial data infrastructure with ease (Zhao et al . 2012). Examples include the
+Geospatial Interactive Online Visualization and Analysis Infrastructure that was devel-
+oped by the Goddard Earth Sciences Data and Information Services Center (Berrick
+et al . 2009), and Grid Processing on Demand System that was developed by European
+Space Agency (ESA 2012). Users can customize data products using scientific work-
+flows that are composed of geospatial Web services such as data services, sensor Web
+services, and processing services. Geospatial data can be accessed via the Internet in
+an interoperable manner, and the processing can be migrated to remote servers
+instead of being performed on local machines (Yue et al . 2010). This is known as the
+service-oriented processing paradigm. In recent years, the analysis-ready pattern has
+emerged as a revolutionary paradigm for big geospatial data processing (Gorelick
+et al . 2017, CEOS 2021). It requires EO data to be preprocessed into an analysis-ready
+form, following which the Cyberinfrastructure is harnessed to make the data available
+to users. Analysis-ready data (ARD) means that the EO data are processed following a
+minimum set of requirements, thereby enabling immediate analysis with a minimal
+additional user effort and interoperability (Lewis et al . 2018). ARD can be incorporated
+into a geospatial data cube, which makes big EO data more accessible and enables
+Figure 1. Paradigm shift in EO processing.
+1854 F. GAO ET AL.

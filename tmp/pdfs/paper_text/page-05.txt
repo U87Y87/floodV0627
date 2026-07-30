@@ -1,0 +1,61 @@
+data cubes often require higher-performance solutions. Moreover, traditional SOLAP
+can accommodate vector data, whereas EO data cubes focus on raster data. It is pos-
+sible to extend the spatial dimension and spatial measure into EO data cubes to
+enable cube analysis on multi-source datasets. Thus, it is necessary to investigate
+approaches for bridging EO and BI data cubes by augmenting cubes with multi-source
+geospatial data ingestion and management, and performing cube processing of joint
+data analysis between dense data (EO data) and sparse data (vector or tabular data).
+Therefore, in this study, the geospatial data cube is understood as a time-series multi-
+dimensional data model, in which multi-source geospatial data can be organized as
+spatially aligned ARD in a high-performance form. Multi-source geospatial data are not
+limited to EO data, such as remote sensing images, but also can be vector, trajectory,
+point cloud, or tabular data. The geospatial data cube makes big EO data more access-
+ible and enables large-scale analysis using HPC technologies.
+2.2. BI data cube
+The BI data cube was first introduced by Gray et al .( 1997) for business data manage-
+ment, and it represents business data in the form of a multi-dimensional array using
+concepts such as the dimension, measure, cell, and level. A data cube is composed of
+cells, which can be defined based on their dimensions and measures. The dimensions
+Table 1. Several definitions of data cube.
+Reference Definition
+Data Cube: A Relational Aggregation Operator
+Generalizing Group-By, Cross-Tab, and Sub-Totals
+(Gray et al . 1997)
+An OLAP cube is a multi-dimensional array of data. The
+0 D data cube is a point. The 1 D data cube is a line
+with a point. The 2 D data cube is a cross tab, a plane,
+two lines, and a point. The 3 D data cube is a cube
+with three intersecting 2 D cross tabs.
+Selective materialization: An efficient method
+for spatial data cube construction
+(Han et al . 1998)
+A spatial data cube is a subject-oriented, integrated, time-
+variant, and non-volatile collection of both spatial and
+nonspatial data, which consists of both spatial and
+nonspatial dimensions and measures.
+The Datacube Manifesto (Baumann 2017) A datacube is a massive multi-dimensional array, also
+called ‘raster data ’ or ‘gridded data ’; ‘massive’ entails
+that we talk about sizes significantly beyond the main
+memory resources of the server hardware. Data values,
+all of the same data type, sit at grid points as defined
+by the d axes of the d-dimensional datacube.
+Coordinates along these axes allow addressing data
+values unambiguously. A d-dimensional grid is
+characterized by the fact that each inner grid point has
+exactly two neighbors along each direction; border grid
+points have just one.
+A view-based model of data-cube to support big earth
+data systems interoperability (Nativi et al . 2017)
+A time series multidimensional (space, time, data type)
+stack of spatially aligned pixel ready for analysis.
+OGC Geospatial Coverages Data Cube Community
+Practice (Voidrot and Percivall 2020)
+A multi-dimensional ( ‘n-D’) array of values. Even though it
+is called a ’cube’, it can be 1-dimensional, 2-
+dimensional, 3-dimensional, or higher-dimensional. The
+dimensions may be coordinates or enumerations, e.g.
+categories. A geospatial data cube is a data cube
+established on basis of a coverage with a specific grid
+system for geospatial data with at least one dimension
+of spatial or temporal definition.
+1856 F. GAO ET AL.

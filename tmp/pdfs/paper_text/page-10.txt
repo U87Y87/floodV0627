@@ -1,0 +1,19 @@
+3.1.1. Product dimension
+This dimension specifies the thematic axis for the geospatial data cube using the
+product name (e.g. Landsat_8_ARD or OSM_Water), type (e.g. raster, vector or tabular),
+processes, and instrument name. The product and instrument name, are linked to the
+Product&Band and Instrument tables, respectively, which are used as supplementary
+tables when consuming raster data. For example, the product dimension can describe
+optical and SAR image products by recording information on the instrument and
+band. The supplementary tables are not necessary when vector data products such as
+OpenStreetMap (OSM) are considered. The processes are the functions that have been
+supported and can be performed on the product. Data querying or subsetting can be
+performed along the product dimension using the product name.
+3.1.2. Spatial dimension
+This dimension specifies the spatial axis for the geospatial data cube using the grid
+code, grid type, city name, and province name. The cube uses a spatial grid for tiling
+to enable data readiness in a high-performance form. The tiling for raster data involves
+dividing the data into physical tiles, whereas the tiling for vector data involves index-
+ing the data as logical tiles instead of a physical division, which aids in maintaining
+Figure 2. Cube data model.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1861

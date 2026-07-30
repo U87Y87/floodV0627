@@ -1,0 +1,44 @@
+large-scale analysis with high-performance computing (HPC) technologies (e.g. parallel
+computing or cloud computing).
+This study presents a cube infrastructure for big geospatial data analysis. In
+comparison with existing cube approaches, the infrastructure emphasizes the
+accommodation of multi-source geospatial data, including raster and vector data in
+the cube, cube tile processing with cloud computing, and artificial intelligence (AI)
+machine learning-enabled cube computation. AI-enabled cube computation refers
+to the use of AI for predicting the computational intensity (CI) of parallel cube
+processing tasks, which aids in improving the load balance performance. The
+design and implementation of the cube infrastructure, which is known as GeoCube,
+are detailed in this paper. It covers the ingestion and management of multi-source
+geospatial data in the cube, geospatial data querying and access along different
+cube dimensions, and high-performance cube computing of large-scale geospatial
+datasets. The development of such a geospatial data cube can contribute to
+advancing the EO data cube approach, as well as keep connections with the busi-
+ness intelligence (BI) cube.
+The remainder of this paper is organized as follows: Section 2 introduces the back-
+ground and related work. The proposed method is described in Section 3 . The imple-
+mentation and evaluation of GeoCube are detailed in Section 4 . Section 5 presents a
+discussion and Section 6 concludes the study.
+2. Background and related work
+2.1. Data cube concept
+The term ‘data cube ’ originates from the BI domain. As a data cube generally refers to
+an array of multiple dimensions that facilitates online analytics, it is also known as an
+online analytical processing (OLAP) cube (Gray et al . 1997). The OLAP cube was intro-
+duced into the geospatial domain to accommodate spatial entities in vector data by
+adding the spatial dimension and spatial measure, thereby promoting OLAP to spatial
+OLAP (SOLAP) (Han et al . 1998). In recent years, this term has been used in the EO
+domain to refer to a time-series multi-dimensional array ( Table 1 ). It has been incorpo-
+rated into Cyberinfrastructure to create EO data cube infrastructure, which facilitates
+EO data management, access, analysis, visualization, and interoperability. Table 1 lists
+several typical definitions of data cube, covering definitions from the OLAP, SOLAP,
+array database (Baumann 2017), Earth Science Informatics (Nativi et al . 2017), and
+Open Geospatial Consortium (OGC) (Voidrot and Percivall 2020) communities. In the
+remainder of this paper, the former two are referred to as BI data cubes, whereas the
+latter three are categorized as EO data cubes.
+It is often recognized that EO data cubes are not similar to BI data cubes, despite
+the cube concepts being similar. EO data cubes are always densely populated,
+whereas BI data cubes are typically sparse, which limits the use of the OLAP approach
+in EO data cubes (Strobl et al . 2017). A major challenge in bridging the two cubes is
+the manner in which the data are organized in high-performance forms for efficient
+cube processing. In a traditional BI data cube, a relational database is often selected
+for cube management, which is possible owing to the sparse datasets. However, EO
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1855

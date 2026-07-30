@@ -1,0 +1,40 @@
+cube capabilities. Thus, intelligent interpretation models for object detection, scene
+classification, and change detection can be provided in a well-organized cube infra-
+structure. (4) ARD is the primary data form for traditional analysis in the current cube,
+and AI training data are another type of data form for deep learning. Thus, it is valu-
+able to explore a new AI-ready data form to promote the cube infrastructure. In add-
+ition to the two types of ready data, decision-ready data that are used by decision
+makers are also important, which are often derived by a workflow involving ARD, AI-
+ready data, and analysis models. For example, decision makers may require supporting
+information regarding a flooded road that is only passable by special vehicles. Such
+information can be derived as decision-ready data using ARD such as terrain topog-
+raphy and flood gauges. Decision-ready data can also be integrated into the current
+cube to form a three-ready-data (i.e. ARD, AI-ready data, and decision-ready data) geo-
+spatial infrastructure. Such a cube infrastructure will promote the development of the
+current paradigm (i.e. ARD processing) in the EO domain.
+Acknowledgements
+We appreciate Professor Jennifer Miller and three reviewers for their constructive comments
+that helped improve the quality of the paper. The work was supported by National Natural
+Science Foundation of China (No. 42090011 and No. 42071354), and Major Science and
+Technology Projects of Hubei Province (No. 2020AAA004).
+Disclosure statement
+No potential conflict of interest was reported by the author(s).
+Funding
+The work was supported by National Natural Science Foundation of China [No. 42090011 and
+No. 42071354], and Key Research and Development Program of Hubei, China [No. 2020AAA004].
+Notes on contributors
+Fan Gao is a Ph.D. student in the School of Remote Sensing and Information Engineering at
+Wuhan University. His research interest is in high-performance geoprocessing and GIS. He con-
+tributed to the idea, study design, methodology, implementation, and manuscript writing of
+this paper.
+Peng Yue is a professor at Wuhan University. He serves as the director at Hubei Province
+Engineering Center for Intelligent Geoprocessing and the director at the Institute of Geospatial
+Information and Location Based Services. He supervised the research, and contributed to the
+idea, study design, methodology, and manuscript writing of this paper.
+Zhipeng Cao is a Ph.D. student in the School of Remote Sensing and Information Engineering at
+Wuhan University. His research interest is in big spatio-temporal data stores. He contributed to
+the idea, methodology, and implementation.
+Shuaifeng Zhao is a Ph.D. student in the School of Remote Sensing and Information
+Engineering at Wuhan University. His research interest is in big spatio-temporal data stores and
+processing. He contributed to the idea, methodology, and implementation.
+1880 F. GAO ET AL.

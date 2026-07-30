@@ -1,0 +1,26 @@
+analysis is generated using AI machine learning feature selection and regression train-
+ing. Feature selection is employed to evaluate the importance of a set of candidate
+computational features that potentially affect the intensity. These features can be pre-
+pared based on empirical knowledge and assessed during training stage. The machine
+learning regression algorithms are evaluated using model training and validation to
+determine the best model for the CI prediction. The CI of the tiles can be evaluated
+using the model prior to the computation and saved in the cube infrastructure. When
+specific cube analyses are performed, the computing cost can be directly derived from
+the archived CI instead of evaluated on the fly, thereby enriching the ARD with more
+content and saving time in the analysis stage.
+The enrichment of the CI with the cube follows a n-ary model corresponding to n-
+ary geoprocessing functions. In the 1-ary case, each tile has a single CI value corre-
+sponding to a 1-ary geoprocessing function with one input, such as triangulation and
+NDWI, which can be formalized as follows:
+CI
+k tfdimensionsgðÞ ¼ fk X t dimensionsfgðÞ
+/C0/C1 , (1)
+where tfdimensionsg is a cube tile that is identified by the specific dimensions, CIk /C3ðÞ is
+the CI value of the tile in the geoprocessing k, X ð/C3Þ returns a list of computational
+features of the tile, fk is a pretrained machine learning model for geoprocessing k,
+and fk uses a set of computational features as inputs and returns a CI value.
+In the 2-ary geoprocessing case, in which the function has two inputs such as a
+two-layer intersection, each tile has a CI value that is associated with the tile of
+another product in the cube. It can be formalized as follows:
+Figure 6. Cube computation using AI-enabled CI prediction approach.
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1867

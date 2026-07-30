@@ -1,0 +1,44 @@
+dimensional data cube, and the WCS can support cube operations such as slicing and
+trimming (Baumann 2018). The data cube is still under development and we are
+exploring new ideas to improve its interoperability.
+6. Conclusions and future work
+This study has presented a cube infrastructure for big geospatial data analysis. The
+infrastructure accommodates multi-source geospatial data, including raster and vector
+data. A cube data model was designed and four dimensions, namely product, space,
+time, and band dimensions, were formalized. Several examples of cube exploration
+have been presented. The infrastructure enables large-scale analysis using a hybrid
+parallel method. A set of distributed cube objects extending the Spark RDD for cube
+tiles was designed. The distributed cube objects are compatible with multiple data
+sources, including raster and vector data. To improve the data processing efficiency
+further, a multi-thread computing method was employed together with cloud comput-
+ing to form hybrid parallelism. Batch computation was also used to address the issue
+whereby a massive number of tiles cannot be loaded into memory simultaneously.
+Moreover, a machine learning-based approach was integrated into the cube to
+enhance the parallel geoprocessing. The CI of the tiles can be predicted and saved in
+databases in advance, thereby eliminating the additional time cost of on-the-fly CI pre-
+diction for commonly used products.
+The design and implementation of the cube infrastructure, which is known as
+GeoCube, have been outlined. It covers the ingestion and management of multi-
+source geospatial data in the cube, geospatial data querying and access along differ-
+ent cube dimensions, and high-performance cube computing of large-scale geospatial
+datasets. The development of such a geospatial data cube aids in advancing the EO
+data cube approach as well as keeps connections with the BI cube. The performance
+of the data querying and access, data processing, and load balancing were presented.
+The results demonstrate the advantages of the GeoCube infrastructure. Several appli-
+cations have been presented, including cube OLAP operations, large-scale time-series
+analysis, and multi-source data cube analysis. The results on Landsat, Gaofen, and
+OSM demonstrate the applicability of GeoCube.
+The data cube infrastructure is still under development and receiving increasing
+attention owing to its potential for EO data management and processing. In addition
+to interoperability, the following issues should be investigated in the future: (1)
+Discrete global grid systems (DGGS) exhibit promise as processing-efficient tiling grids
+for both raster and vector data (Purss et al . 2019). It would be worthwhile to investi-
+gate this tiling mechanism for more efficient cube processing. (2) In this study, the AI
+was limited to improving the cube processing performance. Work has been carried
+out on the use of AI to optimize data index, such as learned index (Kraska et al . 2018).
+This can be explored in the future to optimize the data index of the cube. (3) The cur-
+rent cube analysis remains limited to traditional analytical functions. Deep learning
+analytics has been investigated extensively in the geospatial domain. It is necessary to
+explore the manner in which deep learning frameworks can be incorporated into the
+cube infrastructure to enable faster model training and data inference based on the
+INTERNATIONAL JOURNAL OF GEOGRAPHICAL INFORMATION SCIENCE 1879
