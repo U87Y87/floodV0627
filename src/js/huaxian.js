@@ -985,8 +985,10 @@ const DataExportManager = {
             txtContent += `  DEMRC: row${demRowCol.row}, col${demRowCol.col}\n`;
             txtContent += `  Tile coordinates: X${tileInfo.x}, Y${tileInfo.y}\n`;
         });
-        this.downloadTXT(txtContent, `连线坐标信息${CONFIG.FILE_COUNTER}.txt`);
+        const filename = `连线坐标信息${CONFIG.FILE_COUNTER}.txt`;
+        this.downloadTXT(txtContent, filename);
         CONFIG.FILE_COUNTER++;
+        return { content: txtContent, filename };
     }
 };
 

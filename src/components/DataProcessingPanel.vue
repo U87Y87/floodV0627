@@ -20,8 +20,8 @@ const API_BASE = 'http://localhost:5000'
 const tools = [
   { id: 'tif2asc', name: '格式转换', index: '01' },
   { id: 'roughness', name: '粗糙度计算', index: '02' },
-  { id: 'rowcol', name: '获取 ASC 行列号', index: '03' },
-  { id: 'draw', name: '地形工具', index: '04' },
+  { id: 'draw', name: '溃口绘制', index: '03' },
+  { id: 'rowcol', name: '获取 ASC 行列号', index: '04' },
   { id: 'spatial-reference', name: '空间参考文件', index: '05' },
   { id: 'asc-file', name: 'ASC 文件', index: '06' },
   { id: 'roughness-file', name: '糙率文件', index: '07' },
@@ -44,6 +44,7 @@ const roughnessLoading = ref(false)
 const roughnessMessage = ref('')
 const roughnessError = ref('')
 const lineTxtFile = ref(null)
+const lineTxtFileSource = ref('')
 const rowcolLoading = ref(false)
 const rowcolMessage = ref('')
 const rowcolError = ref('')
@@ -281,6 +282,7 @@ async function handleRoughnessSubmit() {
 
 function handleLineTxtFileChange(event) {
   setFile(event, lineTxtFile)
+  lineTxtFileSource.value = lineTxtFile.value ? 'manual' : ''
   sharedBreachFile.value = null
   emit('pipeline-file', { kind: 'breach', file: null })
   rowcolMessage.value = ''
@@ -375,11 +377,28 @@ function stopDrawing() {
 
 function clearDrawing() {
   window.drawingModule?.clearDrawing?.()
+  if (lineTxtFileSource.value === 'draw') {
+    lineTxtFile.value = null
+    lineTxtFileSource.value = ''
+    sharedBreachFile.value = null
+    emit('pipeline-file', { kind: 'breach', file: null })
+    rowcolMessage.value = ''
+    rowcolError.value = ''
+  }
   drawingStatus.value = '线段与点位已清空'
 }
 
-function exportTerrainLine() {
-  window.drawingModule?.exportLineTerrainDataTXT?.()
+async function exportTerrainLine() {
+  const exported = await window.drawingModule?.exportLineTerrainDataTXT?.()
+  if (!exported?.content || !exported?.filename) return
+  lineTxtFile.value = new File([exported.content], exported.filename, {
+    type: 'text/plain;charset=utf-8',
+  })
+  lineTxtFileSource.value = 'draw'
+  sharedBreachFile.value = null
+  emit('pipeline-file', { kind: 'breach', file: null })
+  rowcolMessage.value = '溃口绘制坐标已自动填入，等待导出行列号文件'
+  rowcolError.value = ''
 }
 
 function checkTerrainTiles() {
@@ -568,7 +587,7 @@ onBeforeUnmount(() => {
 
         <div v-show="activeTool === 'rowcol'" class="data-tool-block">
           <div class="tool-heading">
-            <span>03</span>
+            <span>04</span>
             <div><h2>获取 ASC 行列号</h2><p>根据绘制点经纬度导出对应格网行列号。</p></div>
           </div>
           <form @submit.prevent="handleRowcolSubmit">
@@ -605,9 +624,21 @@ onBeforeUnmount(() => {
                 <small>{{ spatialReferenceFile?.name || '未选择文件' }}</small>
               </span>
             </label>
-            <label class="upload-field">
-              <span>绘制坐标 TXT 文件</span>
-              <input type="file" accept=".txt" required @change="handleLineTxtFileChange">
+            <label class="upload-field shared-upload-field">
+              <span>
+                绘制坐标 TXT 文件
+                <i v-if="lineTxtFileSource === 'draw'">03 已自动填充</i>
+              </span>
+              <input
+                class="shared-file-input"
+                type="file"
+                accept=".txt"
+                @change="handleLineTxtFileChange"
+              >
+              <span class="convert-file-picker">
+                <strong>{{ lineTxtFile ? '重新选择' : '选择文件' }}</strong>
+                <small>{{ lineTxtFile?.name || '未选择文件' }}</small>
+              </span>
             </label>
             <button
               class="data-primary-button"
@@ -623,8 +654,8 @@ onBeforeUnmount(() => {
 
         <div v-show="activeTool === 'draw'" class="data-tool-block terrain-tool">
           <div class="tool-heading">
-            <span>04</span>
-            <div><h2>地形工具</h2><p>在 Cesium 场景中绘线并提取沿线地形信息。</p></div>
+            <span>03</span>
+            <div><h2>溃口绘制</h2><p>在 Cesium 场景中绘制溃口线并提取沿线地形信息。</p></div>
           </div>
           <div class="drawing-actions">
             <button id="startDrawing" type="button" @click="startDrawing">开始绘制</button>
@@ -722,7 +753,7 @@ onBeforeUnmount(() => {
             <i>已就绪</i>
           </div>
           <p class="stored-file-note">
-            此文件由“03 获取 ASC 行列号”自动生成，将作为洪水模拟的溃口输入。
+            此文件由“04 获取 ASC 行列号”自动生成，将作为洪水模拟的溃口输入。
           </p>
         </div>
       </section>
