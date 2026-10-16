@@ -14,6 +14,22 @@ const props = defineProps({
 
 const caseStatus = ref('等待加载永川案例')
 const isLoadingCase = ref(false)
+const caseLoaded = computed(() => Boolean(props.renderComponent?.caseLoaded))
+const isPlaying = computed(() => Boolean(props.renderComponent?.isPlaying))
+const infrastructureShown = computed(() => Boolean(props.renderComponent?.infrastructureShown))
+const displayStatus = computed(() => caseLoaded.value && !isLoadingCase.value
+  ? (isPlaying.value ? '案例正在播放，受灾状态累计保留。' : '案例已暂停，可继续播放。')
+  : caseStatus.value)
+
+function togglePlayback() {
+  if (isPlaying.value) props.renderComponent?.stopPlayback()
+  else props.renderComponent?.startPlayback()
+}
+
+function clearCase() {
+  props.renderComponent?.clearFlood()
+  caseStatus.value = '已清除案例图层和播放数据，可重新渲染。'
+}
 const chart = {
   width: 336,
   height: 174,
@@ -125,7 +141,16 @@ async function loadYongchuanCase() {
       <button class="convert-button" :disabled="isLoadingCase" @click="loadYongchuanCase">
         {{ isLoadingCase ? '正在加载...' : '渲染永川案例' }}
       </button>
-      <p class="status">{{ caseStatus }}</p>
+      <div class="case-controls">
+        <button type="button" :disabled="!caseLoaded || isLoadingCase" :aria-pressed="infrastructureShown" @click="renderComponent?.toggleCaseInfrastructure()">
+          {{ infrastructureShown ? '关闭建筑道路' : '显示建筑道路' }}
+        </button>
+        <button type="button" :disabled="!caseLoaded || isLoadingCase" @click="togglePlayback">
+          {{ isPlaying ? '暂停播放' : '继续播放' }}
+        </button>
+        <button type="button" class="clear-case" :disabled="!caseLoaded || isLoadingCase" @click="clearCase">清除洪水播放</button>
+      </div>
+      <p class="status" role="status">{{ displayStatus }}</p>
     </aside>
 
     <article class="case-chart-card">
@@ -225,3 +250,26 @@ async function loadYongchuanCase() {
     </article>
   </section>
 </template>
+
+<style scoped>
+.case-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 12px;
+}
+.case-controls button {
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid #55d7ee50;
+  border-radius: 7px;
+  background: #17394d;
+  color: #d8f3ff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.case-controls button:hover:not(:disabled) { background: #205269; border-color: #55d7ee; }
+.case-controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+.case-controls .clear-case { grid-column: 1 / -1; border-color: #ff737a55; background: #4b2835; color: #ffd1d5; }
+.case-controls .clear-case:hover:not(:disabled) { background: #64313e; border-color: #ff737a; }
+</style>

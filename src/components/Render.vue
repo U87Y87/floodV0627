@@ -1,6 +1,8 @@
 <script setup>
 import * as Cesium from 'cesium'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { buildingFloodState, createDepthSampler } from '../js/floodRisk.js'
+import { CASE_ICONS, createYongchuanInfrastructure } from '../js/yongchuanInfrastructure.js'
 
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 
@@ -14,7 +16,7 @@ defineProps({
 })
 
 const CESIUM_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5ZjUyMWMzYi1hM2IwLTRiNDItODRhNC1kMzVlNjk2YzAwMTgiLCJpZCI6MjQ1NzQxLCJpYXQiOjE3NTM1MjU5MjJ9.lYglm9ETzaBqJf9h_j7MpyQmBNBuX5DwTmCJF_UgQ6U'
-const YONGCHUAN_CASE_FOLDER = 'D:\\Debris Flow\\V0622\\yongchuan'
+const YONGCHUAN_CASE_FOLDER = 'yongchuan'
 const MAX_TERRAIN_HEIGHT_CACHE_ENTRIES = 150000
 const EARTH_RADIUS_METERS = 6378137
 const MONITOR_POINTS = [
@@ -46,6 +48,9 @@ const isTerrainEnabled = ref(false)
 const isTerrainLoading = ref(false)
 const buildingStats = ref({ safe: 0, partial: 0, submerged: 0 })
 const monitorVisible = ref(false)
+const caseInfrastructureVisible = ref(false)
+const infrastructureShown = ref(true)
+const legendDepth = ref({ min: 0, max: 0 })
 const monitorScreens = ref(MONITOR_POINTS.map(emptyMonitorScreen))
 const monitorStates = ref(MONITOR_POINTS.map(emptyMonitorState))
 
@@ -58,6 +63,10 @@ let buildingEntities = []
 let buildingModels = []
 let isCasePlayback = false
 let removeMonitorPostRender
+let caseInfrastructure
+let sampleFrameDepth = () => 0
+let frameRequestVersion = 0
+let playbackGeneration = 0
 const terrainHeightCache = new Map()
 
 const BUILDING_COLORS = {
@@ -65,8 +74,6 @@ const BUILDING_COLORS = {
   partial: Cesium.Color.fromCssColorString('#ffd43b').withAlpha(0.95),
   submerged: Cesium.Color.fromCssColorString('#e03131').withAlpha(0.96),
 }
-
-const BUILDING_STATE_RANK = { safe: 0, partial: 1, submerged: 2 }
 
 const FIXED_BUILDINGS = [
   { id: 'building-1', lon: 112.9111824, lat: 35.3970286, width: 34, depth: 24, height: 10, rotation: -8 },
@@ -205,16 +212,6 @@ function createBuildingModels() {
   }))
 }
 
-function interpolateTriangleDepth(lon, lat, a, b, c) {
-  const denominator = (b.lat - c.lat) * (a.lon - c.lon) + (c.lon - b.lon) * (a.lat - c.lat)
-  if (Math.abs(denominator) < 1e-14) return null
-  const w1 = ((b.lat - c.lat) * (lon - c.lon) + (c.lon - b.lon) * (lat - c.lat)) / denominator
-  const w2 = ((c.lat - a.lat) * (lon - c.lon) + (a.lon - c.lon) * (lat - c.lat)) / denominator
-  const w3 = 1 - w1 - w2
-  if (w1 < -1e-8 || w2 < -1e-8 || w3 < -1e-8) return null
-  return Math.max(0, w1 * a.value + w2 * b.value + w3 * c.value)
-}
-
 function setBuildingEntityTransform(model, entity) {
   const basePosition = Cesium.Cartesian3.fromDegrees(model.lon, model.lat, model.baseHeight)
   entity.position = Cesium.Cartesian3.fromDegrees(model.lon, model.lat, model.baseHeight + model.height / 2)
@@ -225,6 +222,7 @@ function setBuildingEntityTransform(model, entity) {
 }
 
 async function updateBuildingTerrainHeights() {
+  if (caseInfrastructure) await caseInfrastructure.refreshTerrain(isTerrainEnabled.value)
   if (!viewer || !buildingModels.length) return
   if (!isTerrainEnabled.value) {
     buildingModels.forEach((model, index) => {
@@ -244,17 +242,7 @@ async function updateBuildingTerrainHeights() {
 }
 
 function floodDepthAtBuilding(lon, lat) {
-  if (!floodMesh?.vertices?.length || !floodMesh?.triangles?.length) return 0
-  const { vertices, triangles } = floodMesh
-  for (let index = 0; index + 2 < triangles.length; index += 3) {
-    const a = vertices[triangles[index]]
-    const b = vertices[triangles[index + 1]]
-    const c = vertices[triangles[index + 2]]
-    if (!a || !b || !c) continue
-    const depth = interpolateTriangleDepth(lon, lat, a, b, c)
-    if (depth !== null) return depth
-  }
-  return 0
+  return sampleFrameDepth(lon, lat)
 }
 
 function updateMonitorPosition() {
@@ -305,8 +293,8 @@ function monitorLevelStyle(value, maximum) {
 
 function applyBuildingState(model, entity) {
   const depth = floodDepthAtBuilding(model.lon, model.lat)
-  const measuredState = depth <= 0.05 ? 'safe' : depth < model.height ? 'partial' : 'submerged'
-  if (BUILDING_STATE_RANK[measuredState] > BUILDING_STATE_RANK[model.state]) model.state = measuredState
+  model.peakDepth = Math.max(model.peakDepth ?? 0, depth)
+  model.state = buildingFloodState(model.peakDepth, model.height)
   entity.box.material = BUILDING_COLORS[model.state]
   entity.box.outlineColor = Cesium.Color.WHITE.withAlpha(model.state === 'safe' ? 0.45 : 0.75)
   return model.state
@@ -323,6 +311,17 @@ function updateBuildingFloodStates() {
 
 function ensureBuildingsForFlood() {
   if (!viewer) return
+  if (isCasePlayback) {
+    if (!caseInfrastructure) {
+      removeBuildings()
+      caseInfrastructure = createYongchuanInfrastructure(viewer)
+      caseInfrastructure.refreshTerrain(isTerrainEnabled.value).catch((error) => console.warn('Case terrain sampling failed:', error))
+    }
+    caseInfrastructureVisible.value = true
+    caseInfrastructure.setVisible(infrastructureShown.value)
+    buildingStats.value = caseInfrastructure.update(sampleFrameDepth, Number(heightScale.value))
+    return
+  }
   if (buildingEntities.length) {
     updateBuildingFloodStates()
     return
@@ -431,12 +430,19 @@ function renderFlood() {
   const area = calculateMeshArea(vertices, triangles)
   floodAreaText.value = formatArea(area)
   depthRange.value = `${min.toFixed(3)} ~ ${max.toFixed(3)} m`
+  legendDepth.value = { min, max }
   ensureBuildingsForFlood()
   return { area, minDepth: min, maxDepth: max }
 }
 
 function flyToFlood() {
   if (!viewer || !floodMesh?.vertices.length) return
+  if (isCasePlayback) {
+    viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(
+      Cesium.Cartesian3.fromDegrees(103.5469, 31.4465, isTerrainEnabled.value ? 1290 : 0), 620,
+    ), { duration: 1.2, offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-48), 1900) })
+    return
+  }
   const positions = floodMesh.vertices.map((vertex) => Cesium.Cartesian3.fromDegrees(vertex.lon, vertex.lat, 0))
   viewer.camera.flyToBoundingSphere(Cesium.BoundingSphere.fromPoints(positions), {
     duration: 1.2,
@@ -444,7 +450,18 @@ function flyToFlood() {
   })
 }
 
+function focusCaseArea(area) {
+  if (!viewer) return
+  const industrial = area === 'industrial'
+  viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(
+    Cesium.Cartesian3.fromDegrees(industrial ? 103.5545 : 103.5466, industrial ? 31.4537 : 31.4463,
+      isTerrainEnabled.value ? 1280 : 0), industrial ? 420 : 520,
+  ), { duration: 1.2, offset: new Cesium.HeadingPitchRange(Cesium.Math.toRadians(industrial ? 30 : 90), Cesium.Math.toRadians(-65), industrial ? 1500 : 1800) })
+}
+
 function stopPlayback() {
+  playbackGeneration++
+  frameRequestVersion++
   isPlaying.value = false
   if (playbackTimer) clearTimeout(playbackTimer)
   playbackTimer = undefined
@@ -472,19 +489,23 @@ function seekToFrame(event) {
 
 async function renderMeshFrame(frameIndex, shouldFly = false) {
   const frame = animationFrames.value[frameIndex]
-  if (!frame) return
+  if (!frame) return false
+  const requestVersion = ++frameRequestVersion
   try {
     status.value = `正在加载第 ${frameIndex + 1} / ${animationFrames.value.length} 帧...`
     const response = await fetch(`/api/mesh-frame?folder=${encodeURIComponent(meshFolder.value)}&name=${encodeURIComponent(frame.name)}`)
     const data = await response.json()
     if (!response.ok) throw new Error(data.error ?? 'Mesh 文件读取失败。')
+    if (requestVersion !== frameRequestVersion) return false
     const mesh = normalizeFloodFile(data)
     const triangles = flattenTriangles(mesh.triangles, mesh.vertices.length)
     if (mesh.vertices.length < 3 || triangles.length < 3) throw new Error('该帧没有有效三角网格。')
     floodMesh = { vertices: mesh.vertices, triangles }
+    sampleFrameDepth = createDepthSampler(mesh.vertices, triangles)
     activeFrameIndex.value = frameIndex
     fileName.value = frame.name
     await updateFloodTerrainHeights()
+    if (requestVersion !== frameRequestVersion) return false
     const metrics = renderFlood()
     updateMonitorState()
     if (shouldFly) flyToFlood()
@@ -498,8 +519,10 @@ async function renderMeshFrame(frameIndex, shouldFly = false) {
       })
     }
     status.value = `已渲染第 ${frameIndex + 1} / ${animationFrames.value.length} 帧：${frame.name}`
+    return true
   } catch (error) {
-    status.value = `加载失败：${error.message}`
+    if (requestVersion === frameRequestVersion) status.value = `加载失败：${error.message}`
+    return false
   }
 }
 
@@ -521,8 +544,7 @@ async function loadMeshAnimationFolder(folder, initialFrame = 0) {
     const frameIndex = initialFrame === 'last'
       ? animationFrames.value.length - 1
       : Math.max(0, Math.min(Number(initialFrame) || 0, animationFrames.value.length - 1))
-    await renderMeshFrame(frameIndex, true)
-    return true
+    return await renderMeshFrame(frameIndex, true)
   } catch (error) {
     status.value = `索引加载失败：${error.message}`
     return false
@@ -533,11 +555,12 @@ function startPlayback() {
   if (!animationFrames.value.length || isPlaying.value) return
   cancelFrameSeek()
   isPlaying.value = true
+  const generation = ++playbackGeneration
   const playbackDelay = () => Math.round(350 / playbackRate.value)
   const playNext = async () => {
-    if (!isPlaying.value) return
+    if (!isPlaying.value || generation !== playbackGeneration) return
     await renderMeshFrame((activeFrameIndex.value + 1) % animationFrames.value.length)
-    if (isPlaying.value) playbackTimer = setTimeout(playNext, playbackDelay())
+    if (isPlaying.value && generation === playbackGeneration) playbackTimer = setTimeout(playNext, playbackDelay())
   }
   playbackTimer = setTimeout(playNext, playbackDelay())
 }
@@ -558,11 +581,19 @@ function renderNextFrame() {
 }
 
 function clearFlood() {
+  frameRequestVersion++
   stopPlayback()
   cancelFrameSeek()
   monitorVisible.value = false
   monitorStates.value = MONITOR_POINTS.map(emptyMonitorState)
   removeBuildings()
+  caseInfrastructure?.destroy()
+  caseInfrastructure = undefined
+  caseInfrastructureVisible.value = false
+  isCasePlayback = false
+  sampleFrameDepth = () => 0
+  animationFrames.value = []
+  activeFrameIndex.value = 0
   removeFlood()
   floodMesh = undefined
   fileName.value = '尚未选择洪水文件'
@@ -571,11 +602,15 @@ function clearFlood() {
   floodAreaText.value = '-'
   depthRange.value = '-'
   status.value = '已清除洪水图层'
+  emit('case-start')
+}
+
+function toggleCaseInfrastructure() {
+  infrastructureShown.value = !infrastructureShown.value
+  caseInfrastructure?.setVisible(infrastructureShown.value)
 }
 
 async function chooseMeshFolder() {
-  isCasePlayback = false
-  monitorVisible.value = false
   status.value = '正在打开文件夹选择窗口...'
   try {
     const response = await fetch('/api/select-folder', { method: 'POST' })
@@ -585,6 +620,7 @@ async function chooseMeshFolder() {
       status.value = '已取消文件夹选择。'
       return
     }
+    clearFlood()
     await loadMeshAnimationFolder(result.path)
   } catch (error) {
     status.value = `选择失败：${error.message}`
@@ -592,6 +628,8 @@ async function chooseMeshFolder() {
 }
 
 async function loadYongchuanCase() {
+  clearFlood()
+  infrastructureShown.value = true
   isCasePlayback = true
   monitorVisible.value = true
   monitorStates.value = MONITOR_POINTS.map(emptyMonitorState)
@@ -601,6 +639,9 @@ async function loadYongchuanCase() {
     playbackRate.value = 8
     startPlayback()
   } else {
+    caseInfrastructure?.destroy()
+    caseInfrastructure = undefined
+    caseInfrastructureVisible.value = false
     isCasePlayback = false
     monitorVisible.value = false
   }
@@ -682,11 +723,13 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  frameRequestVersion++
   stopPlayback()
   cancelFrameSeek()
   removeMonitorPostRender?.()
   removeMonitorPostRender = undefined
   removeBuildings()
+  caseInfrastructure?.destroy()
   emit('viewer-ready', null)
   if (window.cesiumViewer === viewer) window.cesiumViewer = undefined
   viewer?.destroy()
@@ -695,6 +738,13 @@ onBeforeUnmount(() => {
 
 defineExpose({
   loadYongchuanCase,
+  caseLoaded: caseInfrastructureVisible,
+  infrastructureShown,
+  isPlaying,
+  startPlayback,
+  stopPlayback,
+  clearFlood,
+  toggleCaseInfrastructure,
   getViewer: () => viewer,
   setTerrainEnabled,
   toggleTerrain,
@@ -762,6 +812,29 @@ defineExpose({
   </aside>
   </Transition>
   <div ref="cesiumContainer" class="cesium-container" />
+  <aside v-if="caseInfrastructureVisible && infrastructureShown" class="case-map-legend" aria-label="永川案例图例">
+    <header><strong>场景图例</strong><span>永川案例</span></header>
+    <div class="case-area-focus"><button @click="focusCaseArea('residential')">居民区</button><button @click="focusCaseArea('industrial')">厂房区</button></div>
+    <div class="facility-legend">
+      <span><img :src="CASE_ICONS.residential" alt="">居民区</span>
+      <span><img :src="CASE_ICONS.rescue" alt="">救援地 / 安置点</span>
+      <span><img :src="CASE_ICONS.terminal" alt="">道路受淹警报</span>
+      <span><i class="road-legend-line dry" />尚未受淹道路</span>
+      <span><i class="road-legend-line" />累计受淹道路</span>
+    </div>
+    <div class="depth-legend-title">水深 <span>m · 当前帧</span></div>
+    <div class="case-depth-ramp" :style="{ background: `linear-gradient(90deg, ${COLOR_RAMPS[colorRamp].join(',')})` }" />
+    <div class="legend-range"><span>{{ legendDepth.min.toFixed(2) }} 浅</span><span>{{ legendDepth.max.toFixed(2) }} 深</span></div>
+    <div class="depth-legend-title">建筑累计受淹等级</div>
+    <div class="building-risk-ramp" />
+    <div class="legend-range"><span>轻</span><span>重</span></div>
+    <ul class="building-risk-key">
+      <li><i style="background: #61e5a2" />未受淹 <b>{{ buildingStats.safe }}</b></li>
+      <li><i style="background: #ffc447" />受淹不超过楼高 50% <b>{{ buildingStats.partial }}</b></li>
+      <li><i style="background: #ff343e" />受淹超过楼高 50% <b>{{ buildingStats.submerged }}</b></li>
+    </ul>
+    <p>道路按最新标注线绘制，建筑为示意布设。<br>颜色保留本次案例的最高受淹等级，退水不恢复；重新加载案例后重置。</p>
+  </aside>
   <div
     v-for="(point, index) in MONITOR_POINTS"
     v-show="monitorVisible && monitorScreens[index]?.onScreen"
@@ -792,3 +865,44 @@ defineExpose({
     <span class="monitor-location-dot" aria-hidden="true" />
   </div>
 </template>
+
+<style scoped>
+.case-map-legend {
+  position: absolute;
+  z-index: 17;
+  bottom: 32px;
+  left: 20px;
+  width: 226px;
+  max-height: calc(100% - 145px);
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid #5bd7e440;
+  border-radius: 12px;
+  background: #101f2de8;
+  box-shadow: 0 8px 30px #0005;
+  color: #e8f5fc;
+  font-size: 12px;
+  backdrop-filter: blur(12px);
+}
+.case-map-legend header, .legend-range, .depth-legend-title { display: flex; justify-content: space-between; align-items: center; }
+.case-map-legend header { border-bottom: 1px solid #ffffff1a; padding-bottom: 10px; margin-bottom: 10px; }
+.case-map-legend header strong { font-size: 15px; }
+.case-map-legend header span, .depth-legend-title span { font-size: 10px; color: #92b4c9; }
+.facility-legend { display: grid; grid-template-columns: 1fr 1.5fr; gap: 9px 6px; }
+.facility-legend span { display: flex; align-items: center; gap: 7px; }
+.facility-legend img { width: 24px; height: 26px; object-fit: contain; }
+.road-legend-line { display: inline-block; width: 24px; height: 3px; background: #ff424d; }
+.road-legend-line.dry { background: #30c9ff; }
+.case-area-focus { display: flex; gap: 8px; margin-bottom: 12px; }
+.case-area-focus button { flex: 1; padding: 5px; border: 1px solid #5bd7e440; border-radius: 5px; background: #163446; color: #c4e8f5; cursor: pointer; font-size: 11px; }
+.depth-legend-title { margin: 14px 0 8px; font-weight: 600; }
+.case-depth-ramp, .building-risk-ramp { height: 10px; border-radius: 3px; }
+.building-risk-ramp { background: linear-gradient(90deg, #61e5a2, #ffc447, #ff343e); }
+.legend-range { color: #9bb7c9; font-size: 10px; margin-top: 5px; }
+.building-risk-key { display: grid; gap: 7px; list-style: none; padding: 0; margin: 12px 0; }
+.building-risk-key li { display: flex; align-items: center; gap: 7px; }
+.building-risk-key i { width: 8px; height: 8px; border-radius: 2px; }
+.building-risk-key b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.case-map-legend p { color: #91aabc; font-size: 10px; line-height: 1.6; margin: 10px 0 0; }
+@media (max-width: 700px) { .case-map-legend { width: 200px; left: 10px; bottom: 28px; padding: 10px; } }
+</style>

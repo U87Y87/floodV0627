@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240">
+  <defs>
+    <style>
+      .bg{fill:#ffffff}.title{font:700 34px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#16324f}
+      .layer-title{font:700 25px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#173a5e}
+      .box-title{font:700 21px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#173a5e}
+      .text{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#26445f}
+      .small{font:400 16px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#49677f}
+      .formula{font:italic 18px 'Times New Roman','Microsoft YaHei',serif;fill:#173a5e}
+      .layer{stroke:#6d8da8;stroke-width:2}.node{fill:#fff;stroke:#7895ad;stroke-width:1.8}
+      .flow{fill:none;stroke:#2f6f9f;stroke-width:3;marker-end:url(#arrow)}
+      .thin-flow{fill:none;stroke:#7895ad;stroke-width:2;marker-end:url(#arrowSmall)}
+      .dash{fill:none;stroke:#6d8da8;stroke-width:2;stroke-dasharray:7 7;marker-end:url(#arrowSmall)}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#2f6f9f"/></marker>
+    <marker id="arrowSmall" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#7895ad"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#173a5e" flood-opacity="0.12"/></filter>
+  </defs>
+
+  <rect class="bg" width="1800" height="1240"/>
+  <text class="title" x="900" y="58" text-anchor="middle">洪水数据—模型多维关联框架</text>
+
+  <!-- Application support layer -->
+  <rect class="layer" x="80" y="95" width="1320" height="190" rx="14" fill="#e9f3fa" filter="url(#shadow)"/>
+  <rect x="80" y="95" width="190" height="190" rx="14" fill="#d4e8f5"/>
+  <text class="layer-title" x="175" y="175" text-anchor="middle">应用支撑层</text>
+  <text class="small" x="175" y="208" text-anchor="middle">面向后续章节</text>
+  <rect class="node" x="315" y="132" width="305" height="115" rx="10"/>
+  <text class="box-title" x="468" y="174" text-anchor="middle">模拟结果动态表达</text>
+  <text class="small" x="468" y="207" text-anchor="middle">语义解析 · 空间索引 · 时空一致性</text>
+  <rect class="node" x="662" y="132" width="305" height="115" rx="10"/>
+  <text class="box-title" x="815" y="174" text-anchor="middle">链式服务节点构建</text>
+  <text class="small" x="815" y="207" text-anchor="middle">数据处理节点 · 模型计算节点</text>
+  <rect class="node" x="1009" y="132" width="345" height="115" rx="10"/>
+  <text class="box-title" x="1182" y="174" text-anchor="middle">“传—算—绘”协同驱动</text>
+  <text class="small" x="1182" y="207" text-anchor="middle">依赖组织 · 服务编排 · 弹性调度</text>
+
+  <!-- Association integration layer -->
+  <rect class="layer" x="80" y="330" width="1320" height="250" rx="14" fill="#edf7f4" filter="url(#shadow)"/>
+  <rect x="80" y="330" width="190" height="250" rx="14" fill="#d7eee7"/>
+  <text class="layer-title" x="175" y="430" text-anchor="middle">关联集成层</text>
+  <text class="small" x="175" y="465" text-anchor="middle">形成统一关联对象</text>
+  <rect class="node" x="315" y="375" width="440" height="160" rx="10"/>
+  <text class="box-title" x="535" y="414" text-anchor="middle">数据—模型关联图 G<tspan baseline-shift="sub" font-size="15">DM</tspan></text>
+  <text class="formula" x="535" y="452" text-anchor="middle">G<tspan baseline-shift="sub" font-size="14">DM</tspan> = (V<tspan baseline-shift="sub" font-size="14">D</tspan> ∪ V<tspan baseline-shift="sub" font-size="14">M</tspan>, E<tspan baseline-shift="sub" font-size="14">DM</tspan>, A)</text>
+  <text class="small" x="535" y="490" text-anchor="middle">输入关系 · 输出关系 · 约束关系 · 派生关系</text>
+  <rect class="node" x="800" y="375" width="554" height="160" rx="10"/>
+  <text class="box-title" x="1077" y="414" text-anchor="middle">面向任务的数据—模型关联单元 U<tspan baseline-shift="sub" font-size="15">k</tspan></text>
+  <text class="formula" x="1077" y="452" text-anchor="middle">U<tspan baseline-shift="sub" font-size="14">k</tspan> = ⟨T<tspan baseline-shift="sub" font-size="14">k</tspan>, D<tspan baseline-shift="sub" font-size="14">in</tspan>, M<tspan baseline-shift="sub" font-size="14">k</tspan>, D<tspan baseline-shift="sub" font-size="14">out</tspan>, C<tspan baseline-shift="sub" font-size="14">k</tspan>, I<tspan baseline-shift="sub" font-size="14">k</tspan>⟩</text>
+  <text class="small" x="1077" y="490" text-anchor="middle">任务标识 · 输入数据 · 计算模型 · 输出结果 · 约束 · 接口</text>
+  <path class="thin-flow" d="M755 455H790"/>
+
+  <!-- Multidimensional constraints -->
+  <rect class="layer" x="80" y="625" width="1320" height="245" rx="14" fill="#fff7e7" filter="url(#shadow)"/>
+  <rect x="80" y="625" width="190" height="245" rx="14" fill="#f6e7c6"/>
+  <text class="layer-title" x="175" y="720" text-anchor="middle">多维关联</text>
+  <text class="layer-title" x="175" y="754" text-anchor="middle">约束层</text>
+  <text class="small" x="175" y="790" text-anchor="middle">硬约束 + 关联评价</text>
+  <rect class="node" x="305" y="676" width="185" height="142" rx="10"/>
+  <text class="box-title" x="398" y="717" text-anchor="middle">语义关联</text>
+  <text class="small" x="398" y="754" text-anchor="middle">对象类型 · 物理含义</text>
+  <text class="small" x="398" y="782" text-anchor="middle">量纲 · 单位</text>
+  <rect class="node" x="508" y="676" width="185" height="142" rx="10"/>
+  <text class="box-title" x="601" y="717" text-anchor="middle">接口关联</text>
+  <text class="small" x="601" y="754" text-anchor="middle">格式 · 字段 · 类型</text>
+  <text class="small" x="601" y="782" text-anchor="middle">输入/输出接口</text>
+  <rect class="node" x="711" y="676" width="185" height="142" rx="10"/>
+  <text class="box-title" x="804" y="717" text-anchor="middle">空间关联</text>
+  <text class="small" x="804" y="754" text-anchor="middle">坐标系 · 空间范围</text>
+  <text class="small" x="804" y="782" text-anchor="middle">分辨率 · 尺度</text>
+  <rect class="node" x="914" y="676" width="185" height="142" rx="10"/>
+  <text class="box-title" x="1007" y="717" text-anchor="middle">时间关联</text>
+  <text class="small" x="1007" y="754" text-anchor="middle">时间范围 · 时序</text>
+  <text class="small" x="1007" y="782" text-anchor="middle">时间步长 · 时效性</text>
+  <rect class="node" x="1117" y="676" width="237" height="142" rx="10"/>
+  <text class="box-title" x="1236" y="717" text-anchor="middle">任务依赖关联</text>
+  <text class="small" x="1236" y="754" text-anchor="middle">前后序关系 · 处理条件</text>
+  <text class="small" x="1236" y="782" text-anchor="middle">调用顺序 · 状态依赖</text>
+
+  <!-- Resource description layer -->
+  <rect class="layer" x="80" y="915" width="1320" height="230" rx="14" fill="#f1f4f7" filter="url(#shadow)"/>
+  <rect x="80" y="915" width="190" height="230" rx="14" fill="#dde5eb"/>
+  <text class="layer-title" x="175" y="1010" text-anchor="middle">资源描述层</text>
+  <text class="small" x="175" y="1045" text-anchor="middle">参数化组织与注册</text>
+  <rect class="node" x="305" y="960" width="252" height="142" rx="10"/>
+  <text class="box-title" x="431" y="1001" text-anchor="middle">多源洪水数据</text>
+  <text class="small" x="431" y="1038" text-anchor="middle">地形 · 水文 · 设施 · 范围</text>
+  <text class="small" x="431" y="1067" text-anchor="middle">格式 · 空间参考 · 时序信息</text>
+  <rect class="node" x="592" y="960" width="252" height="142" rx="10"/>
+  <text class="box-title" x="718" y="1001" text-anchor="middle">洪水计算模型</text>
+  <text class="small" x="718" y="1038" text-anchor="middle">模型标识 · 功能 · 版本</text>
+  <text class="small" x="718" y="1067" text-anchor="middle">运行环境 · 计算能力</text>
+  <rect class="node" x="879" y="960" width="252" height="142" rx="10"/>
+  <text class="box-title" x="1005" y="1001" text-anchor="middle">输入输出接口</text>
+  <text class="small" x="1005" y="1038" text-anchor="middle">接口编号 · 参数字段</text>
+  <text class="small" x="1005" y="1067" text-anchor="middle">数据类型 · 调用方式</text>
+  <rect class="node" x="1166" y="960" width="188" height="142" rx="10"/>
+  <text class="box-title" x="1260" y="1001" text-anchor="middle">任务需求</text>
+  <text class="small" x="1260" y="1038" text-anchor="middle">模拟范围</text>
+  <text class="small" x="1260" y="1067" text-anchor="middle">精度与时效要求</text>
+
+  <!-- Main upward information flow -->
+  <path class="flow" d="M740 915V885"/>
+  <path class="flow" d="M740 625V595"/>
+  <path class="flow" d="M740 330V300"/>
+
+  <!-- Build process rail -->
+  <rect x="1450" y="95" width="285" height="1050" rx="14" fill="#f7fafc" stroke="#7895ad" stroke-width="2" filter="url(#shadow)"/>
+  <text class="layer-title" x="1593" y="145" text-anchor="middle">关联框架构建流程</text>
+  <rect class="node" x="1495" y="190" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="226" text-anchor="middle">① 资源读取</text>
+  <text class="small" x="1593" y="256" text-anchor="middle">数据、模型与任务注册</text>
+  <path class="thin-flow" d="M1593 280V325"/>
+  <rect class="node" x="1495" y="330" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="366" text-anchor="middle">② 特征提取</text>
+  <text class="small" x="1593" y="396" text-anchor="middle">形成统一参数描述</text>
+  <path class="thin-flow" d="M1593 420V465"/>
+  <rect class="node" x="1495" y="470" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="506" text-anchor="middle">③ 接口映射</text>
+  <text class="small" x="1593" y="536" text-anchor="middle">载入字段匹配结果</text>
+  <path class="thin-flow" d="M1593 560V605"/>
+  <rect class="node" x="1495" y="610" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="646" text-anchor="middle">④ 约束检验</text>
+  <text class="small" x="1593" y="676" text-anchor="middle">语义、时空与任务校验</text>
+  <path class="thin-flow" d="M1593 700V745"/>
+  <rect class="node" x="1495" y="750" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="786" text-anchor="middle">⑤ 关系生成</text>
+  <text class="small" x="1593" y="816" text-anchor="middle">构建关联边与关联图</text>
+  <path class="thin-flow" d="M1593 840V885"/>
+  <rect class="node" x="1495" y="890" width="195" height="90" rx="10"/>
+  <text class="box-title" x="1593" y="926" text-anchor="middle">⑥ 单元封装</text>
+  <text class="small" x="1593" y="956" text-anchor="middle">形成任务关联单元</text>
+  <path class="thin-flow" d="M1593 980V1025"/>
+  <rect x="1495" y="1030" width="195" height="70" rx="35" fill="#d4e8f5" stroke="#2f6f9f" stroke-width="2"/>
+  <text class="box-title" x="1593" y="1073" text-anchor="middle">服务节点调用</text>
+
+  <!-- Cross references -->
+  <path class="dash" d="M1400 1030H1440"/>
+  <path class="dash" d="M1440 747H1400"/>
+  <path class="dash" d="M1400 455H1440"/>
+
+  <text class="small" x="900" y="1205" text-anchor="middle">图2-X  洪水数据—模型多维关联框架</text>
+</svg>
